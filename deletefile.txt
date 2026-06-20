@@ -1,0 +1,179 @@
+// deleted from admin/page.tsx 
+        <div className="mb-20">
+          <div
+            className="
+            border
+            border-white/10
+            rounded-[2rem]
+            bg-white/5
+            p-8
+            mb-12
+            "
+          >
+            <div className="mb-10">
+              <p className="uppercase tracking-[0.4em] text-[#d4af37] text-sm mb-3">
+                XENON CMS
+              </p>
+
+              <h2 className="text-4xl font-light">
+                Add Collection
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-5">
+              {/* Collection Name */}
+              {/* <input
+                type="text"
+                placeholder="Collection Name"
+                value={collection.name}
+                onChange={(e) =>
+                  setCollection({
+                    ...collection,
+                    name: e.target.value
+                  })
+                }
+                className="
+                bg-black/30
+                border
+                border-white/10
+                rounded-2xl
+                px-6
+                py-5
+                outline-none
+                "
+              /> */}
+
+              {/* Collection Banner */}
+              {/* <input
+                type="text"
+                placeholder="Collection Banner Image URL"
+                value={collection.image}
+                onChange={(e) =>
+                  setCollection({
+                    ...collection,
+                    image: e.target.value
+                  })
+                }
+                className="
+                bg-black/30
+                border
+                border-white/10
+                rounded-2xl
+                px-6
+                py-5
+                outline-none
+                "
+              /> */}
+            </div>
+
+            {/* Featured */}
+            <div className="mt-6 flex items-center gap-4">
+              <input
+                type="checkbox"
+                checked={collection.featured}
+                onChange={(e) =>
+                  setCollection({
+                    ...collection,
+                    featured:
+                      e.target.checked
+                  })
+                }
+              />
+
+              <p className="text-white/70">
+                Show on homepage
+              </p>
+            </div>
+
+            {/* Add Button */}
+            <button
+              onClick={addCollection}
+              className="
+              mt-8
+              px-8
+              py-4
+              rounded-full
+              bg-[#d4af37]
+              text-black
+              font-semibold
+              hover:bg-white
+              transition-all
+              duration-300
+              "
+            >
+              Add Collection
+            </button>
+          </div>
+
+          {/* Collections List */}
+          <div>
+            <h2 className="text-5xl mb-10">
+              Collections
+            </h2>
+
+            {collections.length === 0 ? (
+              <p className="text-white/50">
+                No collections yet.
+              </p>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {collections.map(
+                  (item) => (
+                    <div
+                      key={item.id}
+                      className="
+                      border
+                      border-white/10
+                      rounded-[2rem]
+                      overflow-hidden
+                      bg-white/5
+                      "
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="
+                        h-[260px]
+                        w-full
+                        object-cover
+                        "
+                      />
+
+                      <div className="p-6">
+                        <p className="uppercase tracking-[0.3em] text-xs text-[#d4af37] mb-3">
+                          COLLECTION
+                        </p>
+
+                        <h3 className="text-3xl mb-4">
+                          {item.name}
+                        </h3>
+
+                        <div className="flex items-center justify-between">
+                          <span className="text-white/50">
+                            /collection/{item.slug}
+                          </span>
+
+                          {item.featured && (
+                            <span
+                              className="
+                              px-4
+                              py-2
+                              rounded-full
+                              bg-[#d4af37]
+                              text-black
+                              text-sm
+                              font-semibold
+                              "
+                            >
+                              Featured
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+          </div>
+        </div> 
