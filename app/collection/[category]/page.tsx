@@ -95,7 +95,7 @@ export default async function CollectionPage({
               </span>
             </div>
           </div>
-
+{/* This website made by prateek kushwaha github : @prateekkushwaha2*/}
           {/* Products */}
           <CollectionProducts products={products}/>
         </div>
