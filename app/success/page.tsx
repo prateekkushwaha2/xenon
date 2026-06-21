@@ -73,6 +73,7 @@ export default function SuccessPage() {
             Continue Shopping
           </Link>
         </div>
+        {/* This website is made by prateek kushwaha github : @prateekkushwaha2*/}
       </div>
     </main>
   )
