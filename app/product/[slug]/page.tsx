@@ -45,7 +45,7 @@ export default async function ProductPage({
       </main>
     )
   }
-
+{/* This website created by prateek kushwaha github : @prateekkushwaha2*/}
   const estimatedDelivery =
     getEstimatedDelivery()
 
