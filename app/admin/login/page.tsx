@@ -58,7 +58,7 @@ export default function AdminLoginPage() {
             }
             className="w-full bg-black/30 border border-white/10 rounded-2xl px-6 py-5 outline-none"
           />
-
+{/* This website is amde by prateek kushwaha github : @prateekkushwaha2*/}
           <input
             type="password"
             placeholder="Password"
