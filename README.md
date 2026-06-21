@@ -5,7 +5,9 @@ Luxury Jewellery & Cosmetics E-Commerce Platform
 XENON is a premium luxury commerce platform built to deliver an elegant shopping experience for jewellery and cosmetic products. The platform combines luxury-focused UI/UX with a modern commerce infrastructure including inventory management, secure payments, order tracking, transactional emails, and an administrative management dashboard.
 
 ---
+![App Preview](Screenshot\ 2026-06-21\ 110629.png)
 ![App Preview](Screenshot\ 2026-06-21\ 110655.png)
+
 
 ## Overview
 
