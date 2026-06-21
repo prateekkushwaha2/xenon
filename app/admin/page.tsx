@@ -914,7 +914,7 @@ export default function AdminPage() {
               Add Collection
             </button>
           </div>
-
+{/* This website is amde by prateek kushwaha github : @prateekkushwaha2*/}
           {/* Collections List */}
           <div>
             <h2 className="text-5xl mb-10">
@@ -1051,6 +1051,7 @@ export default function AdminPage() {
                       </div>
 
                       {/* ORDER ITEMS */}
+                      {/* This website is amde by prateek kushwaha github : @prateekkushwaha2*/}
                       <div className="mt-8">
                         <p className="uppercase tracking-[0.3em] text-xs text-[#d4af37] mb-4">
                           Ordered Products
