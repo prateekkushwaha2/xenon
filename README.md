@@ -1,3 +1,4 @@
+Note the Supabase is not working for now, so there wil be error in backend related fetching and authentication
 # XENON
 
 Luxury Jewellery & Cosmetics E-Commerce Platform
