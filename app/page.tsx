@@ -308,7 +308,7 @@ export default function Home() {
             LinearEra
           </a>
 
-          <nav className="hidden items-center gap-8 text-xs uppercase tracking-[0.18em] lg:flex">
+          <nav className="hidden items-center gap-8 text-sm uppercase tracking-[0.18em] lg:flex">
             <a href="#why">Why us</a>
             <a href="#services">Services</a>
             <a href="#pricing">Pricing</a>
@@ -367,7 +367,7 @@ export default function Home() {
                   measured at your doorstep.
                 </p>
 
-                <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60">
+                <div className="mt-4 flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/60">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#B68A4C]" />
                   No traffic · No parking · No waiting
                 </div>
@@ -375,7 +375,7 @@ export default function Home() {
 
               <button
                 onClick={() => startBooking()}
-                className="flex w-fit items-center gap-3 rounded-full bg-[#F7F1E7] px-7 py-4 text-xs font-semibold uppercase tracking-[0.17em] text-[#1B1515] shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#C7A56C]"
+                className="flex w-fit items-center gap-3 rounded-full bg-[#F7F1E7] px-7 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#1B1515] shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#C7A56C]"
               >
                 Book a fit visit
                 <Arrow />
@@ -385,7 +385,7 @@ export default function Home() {
         </div>
 
         <div className="absolute bottom-7 right-7 hidden text-right text-white md:block">
-          <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+          <p className="text-sm uppercase tracking-[0.2em] text-white/60">
             LinearEra
           </p>
           <p className="font-serif text-2xl">Fit Lives Better.</p>
@@ -488,7 +488,7 @@ export default function Home() {
                 </span>
 
                 <div className="absolute bottom-5 left-5 right-5 text-white">
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/50">
+                  <p className="text-sm uppercase tracking-[0.2em] text-white/50">
                     {problem.subtitle}
                   </p>
 
@@ -536,7 +536,7 @@ export default function Home() {
               />
 
               <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/20 bg-black/65 p-5 text-white backdrop-blur-xl">
-                <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                <p className="text-sm uppercase tracking-[0.2em] text-white/60">
                   Your home
                 </p>
 
@@ -688,7 +688,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/70 to-transparent" />
               <div className="absolute bottom-5 left-5 text-white">
-                <p className="text-xs uppercase tracking-[0.2em] text-white/50">01 · Craft</p>
+                <p className="text-sm uppercase tracking-[0.2em] text-white/50">01 · Craft</p>
                 <p className="mt-1 font-serif text-3xl">Measured first.</p>
               </div>
             </div>
@@ -759,7 +759,7 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/75 to-transparent" />
                 <div className="absolute bottom-5 left-5 text-white">
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/50">02 · Craft</p>
+                  <p className="text-sm uppercase tracking-[0.2em] text-white/50">02 · Craft</p>
                   <p className="mt-1 font-serif text-3xl md:text-4xl">Precision matters.</p>
                 </div>
               </div>
@@ -839,7 +839,7 @@ export default function Home() {
                       {item.name}
                     </h3>
 
-                    <p className="mt-1 text-xs uppercase tracking-[0.15em] text-white/55">
+                    <p className="mt-1 text-sm uppercase tracking-[0.15em] text-white/55">
                       From ₹{item.price}
                     </p>
                   </div>
@@ -970,7 +970,7 @@ export default function Home() {
                       {count}
                     </span>
 
-                    <span className="text-xs uppercase tracking-[0.15em] text-[#B68A4C]">
+                    <span className="text-sm uppercase tracking-[0.15em] text-[#B68A4C]">
                       {saving}
                     </span>
                   </div>
@@ -1125,7 +1125,7 @@ export default function Home() {
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
             <button
               onClick={() => startBooking()}
-              className="flex items-center justify-center gap-3 rounded-full bg-white px-8 py-5 text-xs font-semibold uppercase tracking-[0.17em] text-black"
+              className="flex items-center justify-center gap-3 rounded-full bg-white px-8 py-5 text-sm font-semibold uppercase tracking-[0.15em] text-black"
             >
               Book a fit visit
               <Arrow />
@@ -1174,7 +1174,7 @@ export default function Home() {
       <div className="fixed bottom-4 left-4 right-4 z-40 md:hidden">
         <button
           onClick={() => startBooking()}
-          className="flex w-full items-center justify-center gap-3 rounded-full bg-[#1B1515] px-6 py-4 text-xs font-semibold uppercase tracking-[0.17em] text-white shadow-2xl ring-1 ring-[#C7A56C]/20"
+          className="flex w-full items-center justify-center gap-3 rounded-full bg-[#1B1515] px-6 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-2xl ring-1 ring-[#C7A56C]/20"
         >
           Book a fit visit
           <Arrow />
@@ -1198,7 +1198,7 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <span className="font-serif text-xl tracking-[-0.04em]">LinearEra</span>
                 <span className="h-3 w-px bg-white/20" />
-                <span className="text-xs uppercase tracking-[0.2em] text-white/65">
+                <span className="text-sm uppercase tracking-[0.2em] text-white/65">
                   Fit visit
                 </span>
               </div>
@@ -1299,7 +1299,7 @@ export default function Home() {
 
                         <div className="mt-8">
                           <div className="mb-2 flex items-center justify-between">
-                            <p className="text-xs uppercase tracking-[0.18em] text-black/55">Who are we fitting?</p>
+                            <p className="text-sm uppercase tracking-[0.18em] text-black/55">Who are we fitting?</p>
                             {orderType !== "Just me" && (
                               <span className="text-xs uppercase tracking-[0.14em] text-[#A77A42]">Group booking</span>
                             )}
@@ -1328,7 +1328,7 @@ export default function Home() {
                           {orderType !== "Just me" && (
                             <div className="mt-2 flex items-center justify-between rounded-xl border border-[#A77A42]/25 bg-[#A77A42]/[0.07] px-4 py-3">
                               <div>
-                                <p className="text-xs uppercase tracking-[0.15em] text-black/55">People in this visit</p>
+                                <p className="text-sm uppercase tracking-[0.15em] text-black/55">People in this visit</p>
                                 <p className="mt-0.5 text-xs text-black/55">Everyone can bring their garments.</p>
                               </div>
                               <div className="flex items-center gap-2">
@@ -1383,7 +1383,7 @@ export default function Home() {
                           <div className="mt-7 rounded-[20px] border border-black/10 bg-white/40 p-4 md:p-5">
                             <div className="flex items-center justify-between">
                               <div>
-                                <p className="text-xs uppercase tracking-[0.2em] text-black/55">Your selection</p>
+                                <p className="text-sm uppercase tracking-[0.2em] text-black/55">Your selection</p>
                                 <p className="mt-1 font-serif text-2xl">{selected.length} {selected.length === 1 ? "garment" : "garments"}</p>
                               </div>
                               {discountPercent > 0 && (
@@ -1406,7 +1406,7 @@ export default function Home() {
                             </div>
 
                             <div className="mt-4 flex items-center justify-between border-t border-black/10 pt-4">
-                              <span className="text-xs uppercase tracking-[0.15em] text-black/55">Estimated total</span>
+                              <span className="text-sm uppercase tracking-[0.15em] text-black/55">Estimated total</span>
                               <span className="font-serif text-2xl">₹{total}</span>
                             </div>
                           </div>
@@ -1480,7 +1480,7 @@ export default function Home() {
                         <div className="mt-6 rounded-[20px] bg-[#211719] p-5 text-white">
                           <div className="flex items-center justify-between">
                             <div>
-                              <p className="text-xs uppercase tracking-[0.2em] text-white/55">Selected garments</p>
+                              <p className="text-sm uppercase tracking-[0.2em] text-white/55">Selected garments</p>
                               <p className="mt-1 font-serif text-2xl">{selected.length} {selected.length === 1 ? "piece" : "pieces"} to assess</p>
                             </div>
                             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-serif">{issues.length}</span>
@@ -1518,19 +1518,26 @@ export default function Home() {
 
                         <div className="mt-8 grid gap-3 sm:grid-cols-2">
                           <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
-                            <span className="text-xs uppercase tracking-[0.16em] text-black/50">Your name</span>
+                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Your name</span>
                             <input required type="text" placeholder="Enter your name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
                           </label>
                           <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
-                            <span className="text-xs uppercase tracking-[0.16em] text-black/50">Phone number</span>
+                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Phone number</span>
                             <input required type="tel" placeholder="+91" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
                           </label>
                           <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3 sm:col-span-2">
-                            <span className="text-xs uppercase tracking-[0.16em] text-black/50">Area / locality</span>
+                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Area / locality</span>
                             <input required type="text" placeholder="Where in Bengaluru?" value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
                           </label>
+                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3 sm:col-span-2">
+                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Preferred visit date</span>
+                            <div className="mt-2 flex items-center gap-3">
+                              <input required type="date" min={new Date().toISOString().split("T")[0]} value={appointmentDate} onChange={(e) => setAppointmentDate(e.target.value)} className="w-full bg-transparent text-base font-medium text-black outline-none" />
+                            </div>
+                            <p className="mt-2 text-sm leading-5 text-black/55">Choose the day that works best for you. We’ll call to confirm the visit.</p>
+                          </label>
                           <label className="rounded-[18px] border border-black/10 bg-white/35 sm:col-span-2">
-                            <span className="block px-4 pt-3 text-xs uppercase tracking-[0.16em] text-black/50">Preferred visit time</span>
+                            <span className="block px-4 pt-3 text-sm uppercase tracking-[0.16em] text-black/50">Preferred visit time</span>
                             <select required value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className="w-full bg-transparent px-4 py-3 text-sm outline-none">
                               <option value="">Choose a time</option>
                               <option>Morning</option>
@@ -1542,7 +1549,7 @@ export default function Home() {
 
                         <div className="mt-6 overflow-hidden rounded-[22px] border border-black/10 bg-white/35">
                           <div className="border-b border-black/10 px-5 py-4">
-                            <p className="text-xs uppercase tracking-[0.2em] text-black/55">What happens next</p>
+                            <p className="text-sm uppercase tracking-[0.2em] text-black/55">What happens next</p>
                           </div>
                           <div className="grid sm:grid-cols-2 lg:grid-cols-4">
                             {[
@@ -1560,29 +1567,49 @@ export default function Home() {
                           </div>
                         </div>
 
-                        <div className="mt-6 rounded-[22px] bg-[#211719] p-5 text-white md:p-6">
-                          <div className="flex items-end justify-between gap-4">
-                            <div>
-                              <p className="text-xs uppercase tracking-[0.2em] text-white/55">Estimated starting price</p>
-                              <p className="mt-1 font-serif text-4xl">₹{total}</p>
+                        <div className="mt-6 overflow-hidden rounded-[24px] bg-[#211719] text-white shadow-[0_18px_45px_rgba(33,23,25,0.16)]">
+                          <div className="grid gap-0 md:grid-cols-[1.15fr_0.85fr]">
+                            <div className="p-5 sm:p-6 md:p-7">
+                              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/55">Estimated starting price</p>
+                              <div className="mt-2 flex items-end gap-3">
+                                <p className="font-serif text-5xl leading-none sm:text-6xl">₹{total}</p>
+                                {discount > 0 && <span className="mb-1 text-sm text-white/40 line-through">₹{subtotal}</span>}
+                              </div>
+                              <p className="mt-4 max-w-[520px] text-sm leading-6 text-white/65">
+                                This is an estimate based on your selected garments. The final alteration price is confirmed only after your Fit Consultant sees the garments and understands the fit required.
+                              </p>
                             </div>
-                          <p className="mt-4 border-t border-white/10 pt-4 text-xs leading-5 text-white/65">
-                            No payment required now. Your Fit Consultant will assess the garments, take measurements and confirm the final alteration price with you at home. Payment is collected after the assessment.
-                          </p>
-                            {discountPercent > 0 && (
-                              <span className="rounded-full bg-[#A77A42]/15 px-3 py-2 text-xs uppercase tracking-[0.13em] text-[#D4B277]">
-                                {discountPercent}% bundle saving
-                              </span>
-                            )}
+
+                            <div className="border-t border-white/10 bg-[#2b1e20] p-5 sm:p-6 md:border-l md:border-t-0 md:p-7">
+                              {discountPercent > 0 && (
+                                <div className="rounded-[18px] border border-[#D4B277]/25 bg-[#3a2928] p-4 sm:p-5">
+                                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#D4B277]">Bundle saving</p>
+                                  <div className="mt-1 flex items-baseline gap-2">
+                                    <span className="font-serif text-3xl">{discountPercent}%</span>
+                                    <span className="text-sm text-white/60">saved</span>
+                                  </div>
+                                  <p className="mt-2 text-sm leading-5 text-white/60">You save ₹{discount} by bringing these garments together.</p>
+                                </div>
+                              )}
+
+                              <div className="mt-4 rounded-[18px] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
+                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/50">Payment at home</p>
+                                <p className="mt-2 text-base font-semibold text-white">No payment required now.</p>
+                                <p className="mt-1 text-sm leading-6 text-white/60">
+                                  We assess the garments, take measurements and confirm the final price with you. <span className="text-white/85">Payment is collected after the assessment.</span>
+                                </p>
+                              </div>
+                            </div>
                           </div>
-                          <div className="mt-5 border-t border-white/10 pt-4">
-                            <div className="flex justify-between text-xs text-white/60"><span>Garments</span><span>{selected.length}</span></div>
-                            <div className="mt-2 flex justify-between text-xs text-white/60"><span>Subtotal</span><span>₹{subtotal}</span></div>
-                            {discount > 0 && <div className="mt-2 flex justify-between text-xs text-[#D4B277]"><span>Bundle saving</span><span>-₹{discount}</span></div>}
+
+                          <div className="border-t border-white/10 px-5 py-4 sm:px-6">
+                            <div className="flex items-center justify-between text-sm text-white/60">
+                              <span>{selected.length} {selected.length === 1 ? "garment" : "garments"}</span>
+                              <span>Estimated ₹{total}</span>
+                            </div>
+                            {discount > 0 && <div className="mt-2 flex justify-between text-sm text-[#D4B277]"><span>Bundle saving</span><span>-₹{discount}</span></div>}
+                            <p className="mt-3 text-sm leading-5 text-white/45">Final pricing is confirmed at your doorstep before the alteration proceeds.</p>
                           </div>
-                          <p className="mt-5 text-xs leading-4 text-white/65">
-                            Starting prices are estimates. Final pricing is confirmed after the Fit Consultant assesses the garment.
-                          </p>
                         </div>
                       </form>
                     )}
@@ -1597,7 +1624,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => step === 1 ? closeBooking() : setStep(step - 1)}
-                    className="px-2 py-3 text-xs uppercase tracking-[0.15em] text-black/55 transition hover:text-black"
+                    className="px-2 py-3 text-sm uppercase tracking-[0.15em] text-black/55 transition hover:text-black"
                   >
                     {step === 1 ? "Cancel" : "Back"}
                   </button>
@@ -1607,7 +1634,7 @@ export default function Home() {
                       type="button"
                       disabled={(step === 1 && selected.length === 0) || (step === 2 && issues.length === 0)}
                       onClick={() => setStep(step + 1)}
-                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-xs font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528] disabled:cursor-not-allowed disabled:opacity-20"
+                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528] disabled:cursor-not-allowed disabled:opacity-20"
                     >
                       {step === 1 ? "Continue to fit" : "Continue to visit"}
                       <Arrow />
@@ -1616,7 +1643,7 @@ export default function Home() {
                     <button
                       type="submit"
                       form="linearera-booking-form"
-                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-xs font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528]"
+                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528]"
                     >
                       Request my fit visit
                       <Arrow />
