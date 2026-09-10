@@ -214,8 +214,17 @@ export default function Home() {
   useEffect(() => {
     document.body.style.overflow = bookingOpen ? "hidden" : "";
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && bookingOpen) {
+        setBookingOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [bookingOpen]);
 
@@ -1570,8 +1579,8 @@ export default function Home() {
                     </button>
                   ) : (
                     <button
-                      type="button"
-                      onClick={() => document.getElementById("linearera-booking-form")?.requestSubmit()}
+                      type="submit"
+                      form="linearera-booking-form"
                       className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528]"
                     >
                       Request my fit visit
