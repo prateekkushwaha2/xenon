@@ -204,6 +204,8 @@ export default function Home() {
   const [groupSize, setGroupSize] = useState(2);
   const [submitted, setSubmitted] = useState(false);
 
+  const [appointmentDate, setAppointmentDate] = useState("");
+
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -306,7 +308,7 @@ export default function Home() {
             LinearEra
           </a>
 
-          <nav className="hidden items-center gap-8 text-[10px] uppercase tracking-[0.18em] lg:flex">
+          <nav className="hidden items-center gap-8 text-xs uppercase tracking-[0.18em] lg:flex">
             <a href="#why">Why us</a>
             <a href="#services">Services</a>
             <a href="#pricing">Pricing</a>
@@ -315,7 +317,7 @@ export default function Home() {
 
           <button
             onClick={() => startBooking()}
-            className="rounded-full bg-white px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-black transition hover:scale-[1.03]"
+            className="rounded-full bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.15em] text-black transition hover:scale-[1.03]"
           >
             Book a fit visit
           </button>
@@ -346,7 +348,7 @@ export default function Home() {
           <div className="w-full">
             <div className="mb-7 flex items-center gap-3 text-white/65">
               <span className="h-px w-10 bg-white/60" />
-              <span className="text-[10px] uppercase tracking-[0.28em]">
+              <span className="text-xs uppercase tracking-[0.28em]">
                 Bengaluru · Doorstep clothing alterations
               </span>
             </div>
@@ -365,7 +367,7 @@ export default function Home() {
                   measured at your doorstep.
                 </p>
 
-                <div className="mt-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-white/60">
+                <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#B68A4C]" />
                   No traffic · No parking · No waiting
                 </div>
@@ -373,7 +375,7 @@ export default function Home() {
 
               <button
                 onClick={() => startBooking()}
-                className="flex w-fit items-center gap-3 rounded-full bg-[#F7F1E7] px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.17em] text-[#1B1515] shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#C7A56C]"
+                className="flex w-fit items-center gap-3 rounded-full bg-[#F7F1E7] px-7 py-4 text-xs font-semibold uppercase tracking-[0.17em] text-[#1B1515] shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#C7A56C]"
               >
                 Book a fit visit
                 <Arrow />
@@ -383,7 +385,7 @@ export default function Home() {
         </div>
 
         <div className="absolute bottom-7 right-7 hidden text-right text-white md:block">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-white/60">
+          <p className="text-xs uppercase tracking-[0.2em] text-white/60">
             LinearEra
           </p>
           <p className="font-serif text-2xl">Fit Lives Better.</p>
@@ -396,7 +398,7 @@ export default function Home() {
 
       <section className="bg-[#24191B] px-6 py-24 text-[#F7F1E7] md:px-12 md:py-36">
         <div className="mx-auto grid max-w-[1350px] gap-12 lg:grid-cols-[0.7fr_1.6fr]">
-          <p className="text-[10px] uppercase tracking-[0.28em] text-white/55">
+          <p className="text-xs uppercase tracking-[0.28em] text-white/55">
             Why LinearEra
           </p>
 
@@ -448,7 +450,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1500px]">
           <div className="mb-8 flex items-end justify-between px-2 md:mb-12">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-black/60">
+              <p className="text-xs uppercase tracking-[0.25em] text-black/60">
                 The old way
               </p>
 
@@ -461,7 +463,7 @@ export default function Home() {
               </h2>
             </div>
 
-            <p className="hidden max-w-[220px] text-right text-[10px] leading-5 text-black/60 md:block">
+            <p className="hidden max-w-[220px] text-right text-xs leading-5 text-black/60 md:block">
               A small alteration can become a surprisingly
               complicated journey.
             </p>
@@ -481,12 +483,12 @@ export default function Home() {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
 
-                <span className="absolute left-5 top-5 text-[10px] tracking-[0.2em] text-white/60">
+                <span className="absolute left-5 top-5 text-xs tracking-[0.2em] text-white/60">
                   {problem.number}
                 </span>
 
                 <div className="absolute bottom-5 left-5 right-5 text-white">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/50">
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/50">
                     {problem.subtitle}
                   </p>
 
@@ -499,7 +501,7 @@ export default function Home() {
           </div>
 
           <div className="py-24 text-center md:py-32">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-black/55">
+            <p className="text-xs uppercase tracking-[0.25em] text-black/55">
               All this...
             </p>
 
@@ -534,7 +536,7 @@ export default function Home() {
               />
 
               <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/20 bg-black/65 p-5 text-white backdrop-blur-xl">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/60">
+                <p className="text-xs uppercase tracking-[0.2em] text-white/60">
                   Your home
                 </p>
 
@@ -545,7 +547,7 @@ export default function Home() {
             </div>
 
             <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-black/55">
+              <p className="text-xs uppercase tracking-[0.25em] text-black/55">
                 The LinearEra way
               </p>
 
@@ -589,7 +591,7 @@ export default function Home() {
                     key={number}
                     className="grid grid-cols-[38px_115px_1fr] border-t border-black/10 py-5"
                   >
-                    <span className="text-[10px] text-black/50">
+                    <span className="text-xs text-black/50">
                       {number}
                     </span>
 
@@ -597,7 +599,7 @@ export default function Home() {
                       {title}
                     </span>
 
-                    <span className="text-[11px] leading-5 text-black/60">
+                    <span className="text-xs leading-5 text-black/60">
                       {text}
                     </span>
                   </div>
@@ -634,7 +636,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-black/30" />
 
               <div className="absolute bottom-5 left-5 text-white">
-                <span className="text-[10px] tracking-[0.2em] text-white/50">
+                <span className="text-xs tracking-[0.2em] text-white/50">
                   {number}
                 </span>
 
@@ -662,7 +664,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/80 via-transparent to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-5 text-white md:bottom-9 md:left-9 md:right-9">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-white/50">
+                <p className="text-xs uppercase tracking-[0.24em] text-white/50">
                   The fit visit
                 </p>
                 <p className="mt-2 max-w-[520px] font-serif text-4xl leading-[0.9] md:text-6xl">
@@ -686,18 +688,18 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/70 to-transparent" />
               <div className="absolute bottom-5 left-5 text-white">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/50">01 · Craft</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-white/50">01 · Craft</p>
                 <p className="mt-1 font-serif text-3xl">Measured first.</p>
               </div>
             </div>
             <div className="flex min-h-[300px] flex-col justify-between rounded-[2px] bg-[#2A1D1F] p-6 text-[#F7F1E7] md:p-8">
-              <p className="text-[10px] uppercase tracking-[0.24em] text-[#C7A56C]">02 · Finish</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-[#C7A56C]">02 · Finish</p>
               <div>
                 <p className="font-serif text-4xl leading-[0.92] md:text-5xl">
                   Your clothes deserve more than “good enough.”
                 </p>
                 <div className="mt-7 h-px bg-white/10" />
-                <p className="mt-5 text-[11px] leading-5 text-white/65">
+                <p className="mt-5 text-xs leading-5 text-white/65">
                   We combine a human fit assessment with skilled alteration and a final quality check.
                 </p>
               </div>
@@ -714,7 +716,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1450px]">
           <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-black/55">
+              <p className="text-xs uppercase tracking-[0.25em] text-black/55">
                 See what we mean by fit
               </p>
               <h2 className="mt-4 max-w-[850px] font-serif text-[clamp(48px,6.5vw,92px)] leading-[0.84] tracking-[-0.06em]">
@@ -723,7 +725,7 @@ export default function Home() {
                 a <span className="italic text-[#8B3152]">size.</span>
               </h2>
             </div>
-            <p className="max-w-[300px] text-[11px] leading-5 text-black/60">
+            <p className="max-w-[300px] text-xs leading-5 text-black/60">
               Shoulder. Sleeve. Waist. Length. Shape.
               A trained eye sees what a size label cannot.
             </p>
@@ -738,7 +740,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/75 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 text-white md:bottom-8 md:left-8">
-                <p className="text-[10px] uppercase tracking-[0.24em] text-white/50">
+                <p className="text-xs uppercase tracking-[0.24em] text-white/50">
                   01 · Measure
                 </p>
                 <p className="mt-2 font-serif text-4xl leading-[0.9] md:text-6xl">
@@ -757,7 +759,7 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/75 to-transparent" />
                 <div className="absolute bottom-5 left-5 text-white">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/50">02 · Craft</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/50">02 · Craft</p>
                   <p className="mt-1 font-serif text-3xl md:text-4xl">Precision matters.</p>
                 </div>
               </div>
@@ -799,7 +801,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1450px]">
           <div className="mb-12 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-black/55">
+              <p className="text-xs uppercase tracking-[0.25em] text-black/55">
                 Your wardrobe
               </p>
 
@@ -810,7 +812,7 @@ export default function Home() {
               </h2>
             </div>
 
-            <p className="max-w-[300px] text-[11px] leading-5 text-black/60">
+            <p className="max-w-[300px] text-xs leading-5 text-black/60">
               Pick a garment. Tell us what feels wrong.
               We'll handle the rest.
             </p>
@@ -837,7 +839,7 @@ export default function Home() {
                       {item.name}
                     </h3>
 
-                    <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-white/55">
+                    <p className="mt-1 text-xs uppercase tracking-[0.15em] text-white/55">
                       From ₹{item.price}
                     </p>
                   </div>
@@ -859,7 +861,7 @@ export default function Home() {
       <section className="bg-[#E5D6C5] px-5 py-24 md:px-10 md:py-36">
         <div className="mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-black/55">
+            <p className="text-xs uppercase tracking-[0.25em] text-black/55">
               Not sure?
             </p>
 
@@ -878,7 +880,7 @@ export default function Home() {
 
             <button
               onClick={() => startBooking()}
-              className="mt-9 flex items-center gap-3 rounded-full bg-[#1B1515] px-7 py-4 text-[10px] uppercase tracking-[0.17em] text-white"
+              className="mt-9 flex items-center gap-3 rounded-full bg-[#1B1515] px-7 py-4 text-xs uppercase tracking-[0.17em] text-white"
             >
               Check my fit
               <Arrow />
@@ -937,7 +939,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/55">
+              <p className="text-xs uppercase tracking-[0.25em] text-white/55">
                 Pricing
               </p>
 
@@ -968,7 +970,7 @@ export default function Home() {
                       {count}
                     </span>
 
-                    <span className="text-[10px] uppercase tracking-[0.15em] text-[#B68A4C]">
+                    <span className="text-xs uppercase tracking-[0.15em] text-[#B68A4C]">
                       {saving}
                     </span>
                   </div>
@@ -1005,7 +1007,7 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="mt-7 text-[10px] leading-5 text-white/65">
+          <p className="mt-7 text-xs leading-5 text-white/65">
             Starting prices for the pilot. Final
             pricing can vary depending on the alteration required.
           </p>
@@ -1028,7 +1030,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/85 via-transparent to-[#211719]/10" />
 
             <div className="absolute bottom-6 left-6 right-6 text-white md:bottom-10 md:left-10">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/65">
+              <p className="text-xs uppercase tracking-[0.25em] text-white/65">
                 Your wardrobe
               </p>
 
@@ -1057,13 +1059,13 @@ export default function Home() {
               className="h-[550px] w-full object-cover md:h-[680px]"
             />
 
-            <div className="absolute left-5 top-5 rounded-full bg-white/90 px-5 py-3 text-[10px] uppercase tracking-[0.17em]">
+            <div className="absolute left-5 top-5 rounded-full bg-white/90 px-5 py-3 text-xs uppercase tracking-[0.17em]">
               One doorstep visit
             </div>
           </div>
 
           <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-black/55">
+            <p className="text-xs uppercase tracking-[0.25em] text-black/55">
               Fit together
             </p>
 
@@ -1085,7 +1087,7 @@ export default function Home() {
                 setOrderType("Family / Friends");
                 startBooking();
               }}
-              className="mt-9 flex items-center gap-3 rounded-full bg-[#1B1515] px-7 py-4 text-[10px] uppercase tracking-[0.17em] text-white"
+              className="mt-9 flex items-center gap-3 rounded-full bg-[#1B1515] px-7 py-4 text-xs uppercase tracking-[0.17em] text-white"
             >
               Start a group order
               <Arrow />
@@ -1108,7 +1110,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/40" />
 
         <div className="relative mx-auto flex min-h-[720px] max-w-[1450px] flex-col justify-end px-6 pb-14 md:px-12 md:pb-20">
-          <p className="text-[10px] uppercase tracking-[0.28em] text-white/65">
+          <p className="text-xs uppercase tracking-[0.28em] text-white/65">
             LinearEra
           </p>
 
@@ -1123,13 +1125,13 @@ export default function Home() {
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
             <button
               onClick={() => startBooking()}
-              className="flex items-center justify-center gap-3 rounded-full bg-white px-8 py-5 text-[10px] font-semibold uppercase tracking-[0.17em] text-black"
+              className="flex items-center justify-center gap-3 rounded-full bg-white px-8 py-5 text-xs font-semibold uppercase tracking-[0.17em] text-black"
             >
               Book a fit visit
               <Arrow />
             </button>
 
-            <span className="text-[10px] text-white/55">
+            <span className="text-xs text-white/55">
               No app. No shop visit. No complicated form.
             </span>
           </div>
@@ -1147,19 +1149,19 @@ export default function Home() {
               LinearEra
             </p>
 
-            <p className="mt-2 text-[10px] text-white/50">
+            <p className="mt-2 text-xs text-white/50">
               Fit Lives Better.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-x-7 gap-y-3 text-[10px] uppercase tracking-[0.17em] text-white/60">
+          <div className="flex flex-wrap gap-x-7 gap-y-3 text-xs uppercase tracking-[0.17em] text-white/60">
             <a href="#why">Why us</a>
             <a href="#services">Services</a>
             <a href="#pricing">Pricing</a>
             <a href="#process">How it works</a>
           </div>
 
-          <p className="text-[10px] text-white/20">
+          <p className="text-xs text-white/20">
             © {new Date().getFullYear()} LinearEra
           </p>
         </div>
@@ -1172,7 +1174,7 @@ export default function Home() {
       <div className="fixed bottom-4 left-4 right-4 z-40 md:hidden">
         <button
           onClick={() => startBooking()}
-          className="flex w-full items-center justify-center gap-3 rounded-full bg-[#1B1515] px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.17em] text-white shadow-2xl ring-1 ring-[#C7A56C]/20"
+          className="flex w-full items-center justify-center gap-3 rounded-full bg-[#1B1515] px-6 py-4 text-xs font-semibold uppercase tracking-[0.17em] text-white shadow-2xl ring-1 ring-[#C7A56C]/20"
         >
           Book a fit visit
           <Arrow />
@@ -1196,7 +1198,7 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <span className="font-serif text-xl tracking-[-0.04em]">LinearEra</span>
                 <span className="h-3 w-px bg-white/20" />
-                <span className="text-[10px] uppercase tracking-[0.2em] text-white/65">
+                <span className="text-xs uppercase tracking-[0.2em] text-white/65">
                   Fit visit
                 </span>
               </div>
@@ -1210,7 +1212,7 @@ export default function Home() {
 
             <div className="border-b border-black/10 bg-[#F7F1E7] px-5 py-4 md:px-8">
               <div className="mb-3 flex items-center justify-between">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-black/55">
+                <p className="text-xs uppercase tracking-[0.22em] text-black/55">
                   Your fit, arranged
                 </p>
                 <p className="font-serif text-sm text-black/60">0{step} / 03</p>
@@ -1232,10 +1234,10 @@ export default function Home() {
                       }`}
                     />
                     <div className="mt-2 flex items-center gap-2">
-                      <span className={`text-[10px] ${index + 1 <= step ? "text-[#A77A42]" : "text-black/60"}`}>
+                      <span className={`text-xs ${index + 1 <= step ? "text-[#A77A42]" : "text-black/60"}`}>
                         {number}
                       </span>
-                      <span className={`text-[10px] uppercase tracking-[0.14em] ${index + 1 === step ? "text-black" : "text-black/50"}`}>
+                      <span className={`text-xs uppercase tracking-[0.14em] ${index + 1 === step ? "text-black" : "text-black/50"}`}>
                         {label}
                       </span>
                     </div>
@@ -1253,11 +1255,11 @@ export default function Home() {
                         <img src={IMAGES.consultation} alt="LinearEra fit consultation" className="h-full w-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/80 via-transparent to-transparent" />
                         <div className="absolute bottom-5 left-5 text-white">
-                          <p className="text-[10px] uppercase tracking-[0.22em] text-white/55">LinearEra</p>
+                          <p className="text-xs uppercase tracking-[0.22em] text-white/55">LinearEra</p>
                           <p className="mt-1 font-serif text-2xl">Your fit journey starts here.</p>
                         </div>
                       </div>
-                      <p className="text-[10px] uppercase tracking-[0.25em] text-[#A77A42]">Request received</p>
+                      <p className="text-xs uppercase tracking-[0.25em] text-[#A77A42]">Request received</p>
                       <h3 className="mt-3 max-w-[560px] font-serif text-[clamp(48px,7vw,78px)] leading-[0.82] tracking-[-0.055em]">
                         We'll call
                         <br />
@@ -1269,7 +1271,7 @@ export default function Home() {
                     </div>
                     <button
                       onClick={closeBooking}
-                      className="mt-10 w-full rounded-full bg-[#211719] px-7 py-5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#3A2528]"
+                      className="mt-10 w-full rounded-full bg-[#211719] px-7 py-5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#3A2528]"
                     >
                       Back to LinearEra
                     </button>
@@ -1280,7 +1282,7 @@ export default function Home() {
                       <div>
                         <div className="grid gap-7 md:grid-cols-[1fr_190px] md:items-end">
                           <div>
-                            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A77A42]">Step 01 · Your wardrobe</p>
+                            <p className="text-xs uppercase tracking-[0.22em] text-[#A77A42]">Step 01 · Your wardrobe</p>
                             <h4 className="mt-3 font-serif text-[clamp(42px,6vw,66px)] leading-[0.84] tracking-[-0.05em]">
                               What are we
                               <br />
@@ -1297,9 +1299,9 @@ export default function Home() {
 
                         <div className="mt-8">
                           <div className="mb-2 flex items-center justify-between">
-                            <p className="text-[10px] uppercase tracking-[0.18em] text-black/55">Who are we fitting?</p>
+                            <p className="text-xs uppercase tracking-[0.18em] text-black/55">Who are we fitting?</p>
                             {orderType !== "Just me" && (
-                              <span className="text-[10px] uppercase tracking-[0.14em] text-[#A77A42]">Group booking</span>
+                              <span className="text-xs uppercase tracking-[0.14em] text-[#A77A42]">Group booking</span>
                             )}
                           </div>
 
@@ -1316,7 +1318,7 @@ export default function Home() {
                                 }`}
                               >
                                 <span className="block font-serif text-lg">{type}</span>
-                                <span className={`mt-1 block text-[10px] ${orderType === type ? "text-white/65" : "text-black/50"}`}>
+                                <span className={`mt-1 block text-xs ${orderType === type ? "text-white/65" : "text-black/50"}`}>
                                   {type === "Just me" ? "One wardrobe" : "One doorstep visit"}
                                 </span>
                               </button>
@@ -1326,8 +1328,8 @@ export default function Home() {
                           {orderType !== "Just me" && (
                             <div className="mt-2 flex items-center justify-between rounded-xl border border-[#A77A42]/25 bg-[#A77A42]/[0.07] px-4 py-3">
                               <div>
-                                <p className="text-[10px] uppercase tracking-[0.15em] text-black/55">People in this visit</p>
-                                <p className="mt-0.5 text-[11px] text-black/55">Everyone can bring their garments.</p>
+                                <p className="text-xs uppercase tracking-[0.15em] text-black/55">People in this visit</p>
+                                <p className="mt-0.5 text-xs text-black/55">Everyone can bring their garments.</p>
                               </div>
                               <div className="flex items-center gap-2">
                                 <button type="button" onClick={() => setGroupSize(Math.max(2, groupSize - 1))} className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white">−</button>
@@ -1363,8 +1365,8 @@ export default function Home() {
                         {selected.length > 0 && (
                            <div className="mb-3 flex items-center justify-between rounded-[16px] border border-[#A77A42]/20 bg-[#A77A42]/[0.06] px-4 py-3">
                              <div>
-                               <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-black/60">Add another garment</p>
-                               <p className="mt-0.5 text-[10px] text-black/55">Add more pieces to the same doorstep visit.</p>
+                               <p className="text-xs font-medium uppercase tracking-[0.16em] text-black/60">Add another garment</p>
+                               <p className="mt-0.5 text-xs text-black/55">Add more pieces to the same doorstep visit.</p>
                              </div>
                              <button
                                type="button"
@@ -1381,11 +1383,11 @@ export default function Home() {
                           <div className="mt-7 rounded-[20px] border border-black/10 bg-white/40 p-4 md:p-5">
                             <div className="flex items-center justify-between">
                               <div>
-                                <p className="text-[10px] uppercase tracking-[0.2em] text-black/55">Your selection</p>
+                                <p className="text-xs uppercase tracking-[0.2em] text-black/55">Your selection</p>
                                 <p className="mt-1 font-serif text-2xl">{selected.length} {selected.length === 1 ? "garment" : "garments"}</p>
                               </div>
                               {discountPercent > 0 && (
-                                <div className="rounded-full bg-[#A77A42]/10 px-3 py-2 text-[10px] uppercase tracking-[0.13em] text-[#8B642F]">
+                                <div className="rounded-full bg-[#A77A42]/10 px-3 py-2 text-xs uppercase tracking-[0.13em] text-[#8B642F]">
                                   {discountPercent}% bundle saving
                                 </div>
                               )}
@@ -1404,7 +1406,7 @@ export default function Home() {
                             </div>
 
                             <div className="mt-4 flex items-center justify-between border-t border-black/10 pt-4">
-                              <span className="text-[10px] uppercase tracking-[0.15em] text-black/55">Estimated total</span>
+                              <span className="text-xs uppercase tracking-[0.15em] text-black/55">Estimated total</span>
                               <span className="font-serif text-2xl">₹{total}</span>
                             </div>
                           </div>
@@ -1416,7 +1418,7 @@ export default function Home() {
                       <div>
                         <div className="grid gap-6 md:grid-cols-[1fr_180px] md:items-end">
                           <div>
-                            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A77A42]">Step 02 · Fit</p>
+                            <p className="text-xs uppercase tracking-[0.22em] text-[#A77A42]">Step 02 · Fit</p>
                             <h4 className="mt-3 font-serif text-[clamp(42px,6vw,66px)] leading-[0.84] tracking-[-0.05em]">
                               Tell us what
                               <br />
@@ -1433,13 +1435,13 @@ export default function Home() {
 
                         <div className="mt-7 flex items-center justify-between rounded-[18px] border border-black/10 bg-white/40 px-4 py-3">
                            <div>
-                             <p className="text-[10px] font-medium uppercase tracking-[0.15em] text-black/60">Not sure what to choose?</p>
-                             <p className="mt-1 text-[10px] text-black/55">Choose this and we'll assess the fit at home.</p>
+                             <p className="text-xs font-medium uppercase tracking-[0.15em] text-black/60">Not sure what to choose?</p>
+                             <p className="mt-1 text-xs text-black/55">Choose this and we'll assess the fit at home.</p>
                            </div>
                            <button
                              type="button"
                              onClick={() => setIssues((current) => current.includes("Not sure") ? current : [...current, "Not sure"])}
-                             className={`rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] transition ${issues.includes("Not sure") ? "bg-[#211719] text-white" : "border border-black/10 bg-white text-black"}`}
+                             className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition ${issues.includes("Not sure") ? "bg-[#211719] text-white" : "border border-black/10 bg-white text-black"}`}
                            >
                              Not sure
                            </button>
@@ -1478,17 +1480,17 @@ export default function Home() {
                         <div className="mt-6 rounded-[20px] bg-[#211719] p-5 text-white">
                           <div className="flex items-center justify-between">
                             <div>
-                              <p className="text-[10px] uppercase tracking-[0.2em] text-white/55">Selected garments</p>
+                              <p className="text-xs uppercase tracking-[0.2em] text-white/55">Selected garments</p>
                               <p className="mt-1 font-serif text-2xl">{selected.length} {selected.length === 1 ? "piece" : "pieces"} to assess</p>
                             </div>
                             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-serif">{issues.length}</span>
                           </div>
                           <div className="mt-4 flex flex-wrap gap-2">
                             {selected.map((item) => (
-                              <span key={item.id} className="rounded-full bg-white/10 px-3 py-2 text-[10px] uppercase tracking-[0.12em] text-white/65">{item.name}</span>
+                              <span key={item.id} className="rounded-full bg-white/10 px-3 py-2 text-xs uppercase tracking-[0.12em] text-white/65">{item.name}</span>
                             ))}
                           </div>
-                          <p className="mt-4 text-[10px] leading-4 text-white/50">
+                          <p className="mt-4 text-xs leading-4 text-white/50">
                             Not sure? That's completely fine. Select “Not sure” and we'll assess the fit at home.
                           </p>
                         </div>
@@ -1499,7 +1501,7 @@ export default function Home() {
                       <form id="linearera-booking-form" onSubmit={submitBooking}>
                         <div className="grid gap-6 md:grid-cols-[1fr_190px] md:items-end">
                           <div>
-                            <p className="text-[10px] uppercase tracking-[0.22em] text-[#A77A42]">Step 03 · Doorstep</p>
+                            <p className="text-xs uppercase tracking-[0.22em] text-[#A77A42]">Step 03 · Doorstep</p>
                             <h4 className="mt-3 font-serif text-[clamp(42px,6vw,66px)] leading-[0.84] tracking-[-0.05em]">
                               Where should
                               <br />
@@ -1516,19 +1518,19 @@ export default function Home() {
 
                         <div className="mt-8 grid gap-3 sm:grid-cols-2">
                           <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
-                            <span className="text-[10px] uppercase tracking-[0.16em] text-black/50">Your name</span>
+                            <span className="text-xs uppercase tracking-[0.16em] text-black/50">Your name</span>
                             <input required type="text" placeholder="Enter your name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
                           </label>
                           <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
-                            <span className="text-[10px] uppercase tracking-[0.16em] text-black/50">Phone number</span>
+                            <span className="text-xs uppercase tracking-[0.16em] text-black/50">Phone number</span>
                             <input required type="tel" placeholder="+91" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
                           </label>
                           <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3 sm:col-span-2">
-                            <span className="text-[10px] uppercase tracking-[0.16em] text-black/50">Area / locality</span>
+                            <span className="text-xs uppercase tracking-[0.16em] text-black/50">Area / locality</span>
                             <input required type="text" placeholder="Where in Bengaluru?" value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
                           </label>
                           <label className="rounded-[18px] border border-black/10 bg-white/35 sm:col-span-2">
-                            <span className="block px-4 pt-3 text-[10px] uppercase tracking-[0.16em] text-black/50">Preferred visit time</span>
+                            <span className="block px-4 pt-3 text-xs uppercase tracking-[0.16em] text-black/50">Preferred visit time</span>
                             <select required value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className="w-full bg-transparent px-4 py-3 text-sm outline-none">
                               <option value="">Choose a time</option>
                               <option>Morning</option>
@@ -1540,7 +1542,7 @@ export default function Home() {
 
                         <div className="mt-6 overflow-hidden rounded-[22px] border border-black/10 bg-white/35">
                           <div className="border-b border-black/10 px-5 py-4">
-                            <p className="text-[10px] uppercase tracking-[0.2em] text-black/55">What happens next</p>
+                            <p className="text-xs uppercase tracking-[0.2em] text-black/55">What happens next</p>
                           </div>
                           <div className="grid sm:grid-cols-2 lg:grid-cols-4">
                             {[
@@ -1550,9 +1552,9 @@ export default function Home() {
                               ["04", "We handle it", "Tailoring + quality check"],
                             ].map(([number, title, description]) => (
                               <div key={number} className="border-b border-black/10 p-4 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
-                                <span className="text-[10px] text-[#A77A42]">{number}</span>
+                                <span className="text-xs text-[#A77A42]">{number}</span>
                                 <p className="mt-2 font-serif text-xl">{title}</p>
-                                <p className="mt-1 text-[10px] leading-4 text-black/55">{description}</p>
+                                <p className="mt-1 text-xs leading-4 text-black/55">{description}</p>
                               </div>
                             ))}
                           </div>
@@ -1561,24 +1563,24 @@ export default function Home() {
                         <div className="mt-6 rounded-[22px] bg-[#211719] p-5 text-white md:p-6">
                           <div className="flex items-end justify-between gap-4">
                             <div>
-                              <p className="text-[10px] uppercase tracking-[0.2em] text-white/55">Estimated starting price</p>
+                              <p className="text-xs uppercase tracking-[0.2em] text-white/55">Estimated starting price</p>
                               <p className="mt-1 font-serif text-4xl">₹{total}</p>
                             </div>
-                          <p className="mt-4 border-t border-white/10 pt-4 text-[11px] leading-5 text-white/65">
+                          <p className="mt-4 border-t border-white/10 pt-4 text-xs leading-5 text-white/65">
                             No payment required now. Your Fit Consultant will assess the garments, take measurements and confirm the final alteration price with you at home. Payment is collected after the assessment.
                           </p>
                             {discountPercent > 0 && (
-                              <span className="rounded-full bg-[#A77A42]/15 px-3 py-2 text-[10px] uppercase tracking-[0.13em] text-[#D4B277]">
+                              <span className="rounded-full bg-[#A77A42]/15 px-3 py-2 text-xs uppercase tracking-[0.13em] text-[#D4B277]">
                                 {discountPercent}% bundle saving
                               </span>
                             )}
                           </div>
                           <div className="mt-5 border-t border-white/10 pt-4">
-                            <div className="flex justify-between text-[10px] text-white/60"><span>Garments</span><span>{selected.length}</span></div>
-                            <div className="mt-2 flex justify-between text-[10px] text-white/60"><span>Subtotal</span><span>₹{subtotal}</span></div>
-                            {discount > 0 && <div className="mt-2 flex justify-between text-[10px] text-[#D4B277]"><span>Bundle saving</span><span>-₹{discount}</span></div>}
+                            <div className="flex justify-between text-xs text-white/60"><span>Garments</span><span>{selected.length}</span></div>
+                            <div className="mt-2 flex justify-between text-xs text-white/60"><span>Subtotal</span><span>₹{subtotal}</span></div>
+                            {discount > 0 && <div className="mt-2 flex justify-between text-xs text-[#D4B277]"><span>Bundle saving</span><span>-₹{discount}</span></div>}
                           </div>
-                          <p className="mt-5 text-[10px] leading-4 text-white/65">
+                          <p className="mt-5 text-xs leading-4 text-white/65">
                             Starting prices are estimates. Final pricing is confirmed after the Fit Consultant assesses the garment.
                           </p>
                         </div>
@@ -1595,7 +1597,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => step === 1 ? closeBooking() : setStep(step - 1)}
-                    className="px-2 py-3 text-[10px] uppercase tracking-[0.15em] text-black/55 transition hover:text-black"
+                    className="px-2 py-3 text-xs uppercase tracking-[0.15em] text-black/55 transition hover:text-black"
                   >
                     {step === 1 ? "Cancel" : "Back"}
                   </button>
@@ -1605,7 +1607,7 @@ export default function Home() {
                       type="button"
                       disabled={(step === 1 && selected.length === 0) || (step === 2 && issues.length === 0)}
                       onClick={() => setStep(step + 1)}
-                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528] disabled:cursor-not-allowed disabled:opacity-20"
+                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-xs font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528] disabled:cursor-not-allowed disabled:opacity-20"
                     >
                       {step === 1 ? "Continue to fit" : "Continue to visit"}
                       <Arrow />
@@ -1614,7 +1616,7 @@ export default function Home() {
                     <button
                       type="submit"
                       form="linearera-booking-form"
-                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-[10px] font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528]"
+                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-xs font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528]"
                     >
                       Request my fit visit
                       <Arrow />
