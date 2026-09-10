@@ -33,6 +33,18 @@ const IMAGES = {
 
   home:
     "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90",
+
+  wardrobeRoom:
+    "https://images.unsplash.com/photo-1721739232541-d855ae6572af?auto=format&fit=crop&w=1800&q=90",
+
+  measurement:
+    "https://images.unsplash.com/photo-1768745888568-b3ef7c7ba366?auto=format&fit=crop&w=1800&q=90",
+
+  craft:
+    "https://images.unsplash.com/photo-1772290660319-ed78b7a2b469?auto=format&fit=crop&w=1800&q=90",
+
+  atelier:
+    "https://images.unsplash.com/photo-1780504863007-44f229d4d33f?auto=format&fit=crop&w=1800&q=90",
 };
 
 const GARMENTS = [
@@ -596,10 +608,10 @@ export default function Home() {
         <div className="flex gap-3 overflow-x-auto px-5 pb-2">
           {[
             ["01", "YOU", IMAGES.home],
-            ["02", "MEASURE", IMAGES.consultation],
-            ["03", "TAILOR", IMAGES.tailoring],
-            ["04", "CHECK", IMAGES.wardrobe],
-            ["05", "RETURN", IMAGES.home],
+            ["02", "MEASURE", IMAGES.measurement],
+            ["03", "TAILOR", IMAGES.atelier],
+            ["04", "CRAFT", IMAGES.craft],
+            ["05", "RETURN", IMAGES.wardrobeRoom],
           ].map(([number, title, image]) => (
             <div
               key={number}
@@ -680,6 +692,88 @@ export default function Home() {
                 <p className="mt-5 text-[11px] leading-5 text-white/45">
                   We combine a human fit assessment with skilled alteration and a final quality check.
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================
+          VISUAL FIT LIBRARY
+      ===================================================== */}
+
+      <section className="bg-[#F7F1E7] px-5 py-20 md:px-10 md:py-28">
+        <div className="mx-auto max-w-[1450px]">
+          <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.25em] text-black/35">
+                See what we mean by fit
+              </p>
+              <h2 className="mt-4 max-w-[850px] font-serif text-[clamp(48px,6.5vw,92px)] leading-[0.84] tracking-[-0.06em]">
+                Fit is not just
+                <br />
+                a <span className="italic text-[#8B3152]">size.</span>
+              </h2>
+            </div>
+            <p className="max-w-[300px] text-[11px] leading-5 text-black/40">
+              Shoulder. Sleeve. Waist. Length. Shape.
+              A trained eye sees what a size label cannot.
+            </p>
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-12">
+            <div className="group relative min-h-[430px] overflow-hidden md:col-span-7 md:min-h-[650px]">
+              <img
+                src={IMAGES.measurement}
+                alt="Measuring a garment for a better fit"
+                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/75 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 text-white md:bottom-8 md:left-8">
+                <p className="text-[9px] uppercase tracking-[0.24em] text-white/50">
+                  01 · Measure
+                </p>
+                <p className="mt-2 font-serif text-4xl leading-[0.9] md:text-6xl">
+                  The right fit
+                  <br />starts with detail.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-3 md:col-span-5">
+              <div className="group relative min-h-[300px] overflow-hidden">
+                <img
+                  src={IMAGES.craft}
+                  alt="Hand finishing a garment"
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/75 to-transparent" />
+                <div className="absolute bottom-5 left-5 text-white">
+                  <p className="text-[9px] uppercase tracking-[0.2em] text-white/50">02 · Craft</p>
+                  <p className="mt-1 font-serif text-3xl md:text-4xl">Precision matters.</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="group relative min-h-[270px] overflow-hidden">
+                  <img
+                    src={IMAGES.atelier}
+                    alt="Tailor working on garment alterations"
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
+                  />
+                  <div className="absolute inset-0 bg-black/20" />
+                  <p className="absolute bottom-4 left-4 font-serif text-2xl text-white">03 · Alter</p>
+                </div>
+
+                <div className="group relative min-h-[270px] overflow-hidden">
+                  <img
+                    src={IMAGES.wardrobeRoom}
+                    alt="Clothes ready in a wardrobe"
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
+                  />
+                  <div className="absolute inset-0 bg-black/15" />
+                  <p className="absolute bottom-4 left-4 font-serif text-2xl text-white">04 · Return</p>
+                </div>
               </div>
             </div>
           </div>
