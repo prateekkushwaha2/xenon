@@ -201,6 +201,7 @@ export default function Home() {
   const [selected, setSelected] = useState<Garment[]>([]);
   const [issues, setIssues] = useState<string[]>([]);
   const [orderType, setOrderType] = useState("Just me");
+  const [groupSize, setGroupSize] = useState(2);
   const [submitted, setSubmitted] = useState(false);
 
   const [form, setForm] = useState({
@@ -1172,7 +1173,7 @@ export default function Home() {
       </div>
 
       {/* =====================================================
-          BOOKING DRAWER
+          BOOKING EXPERIENCE
       ===================================================== */}
 
       {bookingOpen && (
@@ -1180,421 +1181,400 @@ export default function Home() {
           <button
             aria-label="Close booking"
             onClick={closeBooking}
-            className="absolute inset-0 bg-black/65 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#120D0E]/75 backdrop-blur-md"
           />
 
-          <aside className="absolute right-0 top-0 flex h-full w-full max-w-[720px] flex-col bg-[#F7F1E7] shadow-[-24px_0_80px_rgba(0,0,0,0.18)]">
-            {/* HEADER */}
-            <div className="flex items-center justify-between border-b border-black/10 px-5 py-5 md:px-7">
-              <div>
-                <p className="text-[8px] uppercase tracking-[0.28em] text-black/35">
-                  LinearEra
-                </p>
-
-                <h3 className="mt-1 font-serif text-2xl">
-                  Book a fit visit
-                </h3>
+          <aside className="absolute right-0 top-0 flex h-full w-full max-w-[760px] flex-col overflow-hidden bg-[#F7F1E7] shadow-[-30px_0_100px_rgba(18,13,14,0.28)]">
+            <div className="flex items-center justify-between border-b border-black/10 bg-[#211719] px-5 py-4 text-white md:px-8">
+              <div className="flex items-center gap-3">
+                <span className="font-serif text-xl tracking-[-0.04em]">LinearEra</span>
+                <span className="h-3 w-px bg-white/20" />
+                <span className="text-[8px] uppercase tracking-[0.2em] text-white/45">
+                  Fit visit
+                </span>
               </div>
-
               <button
                 onClick={closeBooking}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/80 transition hover:bg-white hover:text-black"
               >
                 <Close />
               </button>
             </div>
 
-            {/* PROGRESS */}
-            <div className="grid grid-cols-3 border-b border-black/10">
-              {[
-                ["01", "Garments"],
-                ["02", "Fit"],
-                ["03", "Visit"],
-              ].map(([number, label], index) => (
-                <button
-                  key={number}
-                  onClick={() => {
-                    if (index + 1 <= step) {
-                      setStep(index + 1);
-                    }
-                  }}
-                  className={`border-r border-black/10 px-4 py-4 text-left ${
-                    step === index + 1
-                      ? "bg-[#1B1515] text-white"
-                      : "text-black/35"
-                  }`}
-                >
-                  <span className="text-[8px]">{number}</span>
-
-                  <span className="ml-2 text-[9px] uppercase tracking-[0.12em]">
-                    {label}
-                  </span>
-                </button>
-              ))}
+            <div className="border-b border-black/10 bg-[#F7F1E7] px-5 py-4 md:px-8">
+              <div className="mb-3 flex items-center justify-between">
+                <p className="text-[8px] uppercase tracking-[0.22em] text-black/35">
+                  Your fit, arranged
+                </p>
+                <p className="font-serif text-sm text-black/45">0{step} / 03</p>
+              </div>
+              <div className="grid grid-cols-3 gap-1.5">
+                {[
+                  ["01", "Select"],
+                  ["02", "Fit"],
+                  ["03", "Visit"],
+                ].map(([number, label], index) => (
+                  <button
+                    key={number}
+                    onClick={() => index + 1 <= step && setStep(index + 1)}
+                    className="group text-left"
+                  >
+                    <div
+                      className={`h-1.5 overflow-hidden rounded-full ${
+                        index + 1 <= step ? "bg-[#211719]" : "bg-black/10"
+                      }`}
+                    />
+                    <div className="mt-2 flex items-center gap-2">
+                      <span className={`text-[8px] ${index + 1 <= step ? "text-[#A77A42]" : "text-black/25"}`}>
+                        {number}
+                      </span>
+                      <span className={`text-[8px] uppercase tracking-[0.14em] ${index + 1 === step ? "text-black" : "text-black/30"}`}>
+                        {label}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* BODY */}
-            <div className="flex-1 overflow-y-auto px-5 py-7 md:px-7">
-              {submitted ? (
-                <div className="flex min-h-[580px] flex-col items-center justify-center text-center">
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#1B1515] text-white">
-                    <Check />
-                  </div>
-
-                  <p className="mt-8 text-[8px] uppercase tracking-[0.25em] text-black/35">
-                    Request received
-                  </p>
-
-                  <h3 className="mt-4 font-serif text-5xl leading-none">
-                    We'll call you.
-                  </h3>
-
-                  <p className="mt-5 max-w-[350px] text-sm leading-6 text-black/45">
-                    We'll confirm your visit details and understand
-                    what needs to be altered.
-                  </p>
-
-                  <button
-                    onClick={closeBooking}
-                    className="mt-8 rounded-full bg-[#1B1515] px-7 py-4 text-[9px] uppercase tracking-[0.17em] text-white"
-                  >
-                    Done
-                  </button>
-                </div>
-              ) : (
-                <>
-                  {/* STEP 1 */}
-                  {step === 1 && (
+            <div className="flex-1 overflow-y-auto">
+              <div className="px-5 py-7 md:px-8 md:py-9">
+                {submitted ? (
+                  <div className="flex min-h-[620px] flex-col justify-between">
                     <div>
-                      <p className="text-[8px] uppercase tracking-[0.22em] text-black/35">
-                        Step 01
-                      </p>
-
-                      <h4 className="mt-3 font-serif text-4xl leading-none md:text-5xl">
-                        What are we fixing?
-                      </h4>
-
-                      <p className="mt-4 text-sm leading-6 text-black/45">
-                        Select everything you want us to look at.
-                      </p>
-
-                      <div className="mt-7 grid grid-cols-2 gap-2">
-                        {GARMENTS.map((item) => (
-                          <button
-                            key={item.name}
-                            onClick={() => addGarment(item.name)}
-                            className="group relative aspect-[4/5] overflow-hidden bg-black"
-                          >
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                            />
-
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
-
-                            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
-                              <div>
-                                <p className="font-serif text-xl">
-                                  {item.name}
-                                </p>
-
-                                <p className="text-[8px] text-white/50">
-                                  ₹{item.price}+
-                                </p>
-                              </div>
-
-                              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black">
-                                <Plus />
-                              </span>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-
-                      {selected.length > 0 && (
-                        <div className="mt-7">
-                          <div className="mb-3 flex items-center justify-between">
-                            <p className="text-[8px] uppercase tracking-[0.2em] text-black/35">
-                              Your selection
-                            </p>
-
-                            <p className="text-[9px] text-black/35">
-                              {selected.length} item
-                              {selected.length > 1 ? "s" : ""}
-                            </p>
-                          </div>
-
-                          <div className="space-y-2">
-                            {selected.map((item) => (
-                              <div
-                                key={item.id}
-                                className="flex items-center justify-between border border-black/10 bg-white/40 p-3"
-                              >
-                                <div className="flex items-center gap-3">
-                                  <img
-                                    src={item.image}
-                                    alt=""
-                                    className="h-11 w-11 object-cover"
-                                  />
-
-                                  <div>
-                                    <p className="font-serif text-lg">
-                                      {item.name}
-                                    </p>
-
-                                    <p className="text-[8px] text-black/35">
-                                      ₹{item.price}
-                                    </p>
-                                  </div>
-                                </div>
-
-                                <button
-                                  onClick={() =>
-                                    removeGarment(item.id)
-                                  }
-                                  className="text-[8px] uppercase tracking-[0.13em] text-black/30"
-                                >
-                                  Remove
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* STEP 2 */}
-                  {step === 2 && (
-                    <div>
-                      <p className="text-[8px] uppercase tracking-[0.22em] text-black/35">
-                        Step 02
-                      </p>
-
-                      <h4 className="mt-3 font-serif text-4xl leading-none md:text-5xl">
-                        What feels wrong?
-                      </h4>
-
-                      <p className="mt-4 text-sm leading-6 text-black/45">
-                        You don't need to know the tailoring term.
-                      </p>
-
-                      <div className="mt-7 grid grid-cols-2 gap-2">
-                        {FIT_ISSUES.map((issue) => {
-                          const active = issues.includes(issue);
-
-                          return (
-                            <button
-                              key={issue}
-                              onClick={() => toggleIssue(issue)}
-                              className={`flex min-h-[115px] flex-col justify-between border p-5 text-left transition ${
-                                active
-                                  ? "border-[#171717] bg-[#1B1515] text-white"
-                                  : "border-black/10 bg-white/30"
-                              }`}
-                            >
-                              <span className="font-serif text-2xl">
-                                {issue}
-                              </span>
-
-                              <span
-                                className={`flex h-7 w-7 items-center justify-center rounded-full border ${
-                                  active
-                                    ? "border-white bg-white text-black"
-                                    : "border-black/15"
-                                }`}
-                              >
-                                {active && <Check />}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-
-                      <div className="mt-7 border border-black/10 bg-white/30 p-5">
-                        <p className="text-[8px] uppercase tracking-[0.2em] text-black/35">
-                          Selected garments
-                        </p>
-
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {selected.map((item) => (
-                            <span
-                              key={item.id}
-                              className="rounded-full bg-[#1B1515] px-3 py-2 text-[8px] uppercase tracking-[0.12em] text-white"
-                            >
-                              {item.name}
-                            </span>
-                          ))}
+                      <div className="relative mb-8 aspect-[16/7] overflow-hidden rounded-[24px]">
+                        <img src={IMAGES.consultation} alt="LinearEra fit consultation" className="h-full w-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/80 via-transparent to-transparent" />
+                        <div className="absolute bottom-5 left-5 text-white">
+                          <p className="text-[8px] uppercase tracking-[0.22em] text-white/55">LinearEra</p>
+                          <p className="mt-1 font-serif text-2xl">Your fit journey starts here.</p>
                         </div>
                       </div>
+                      <p className="text-[8px] uppercase tracking-[0.25em] text-[#A77A42]">Request received</p>
+                      <h3 className="mt-3 max-w-[560px] font-serif text-[clamp(48px,7vw,78px)] leading-[0.82] tracking-[-0.055em]">
+                        We'll call
+                        <br />
+                        <span className="italic">you.</span>
+                      </h3>
+                      <p className="mt-6 max-w-[450px] text-sm leading-6 text-black/45">
+                        We'll confirm your visit, understand the garments you're bringing and arrange the next step.
+                      </p>
                     </div>
-                  )}
-
-                  {/* STEP 3 */}
-                  {step === 3 && (
-                    <form
-                      onSubmit={submitBooking}
-                      className="space-y-7"
+                    <button
+                      onClick={closeBooking}
+                      className="mt-10 w-full rounded-full bg-[#211719] px-7 py-5 text-[9px] font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#3A2528]"
                     >
+                      Back to LinearEra
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    {step === 1 && (
                       <div>
-                        <p className="text-[8px] uppercase tracking-[0.22em] text-black/35">
-                          Step 03
-                        </p>
+                        <div className="grid gap-7 md:grid-cols-[1fr_190px] md:items-end">
+                          <div>
+                            <p className="text-[8px] uppercase tracking-[0.22em] text-[#A77A42]">Step 01 · Your wardrobe</p>
+                            <h4 className="mt-3 font-serif text-[clamp(42px,6vw,66px)] leading-[0.84] tracking-[-0.05em]">
+                              What are we
+                              <br />
+                              <span className="italic">fixing?</span>
+                            </h4>
+                            <p className="mt-5 max-w-[430px] text-sm leading-6 text-black/45">
+                              Select every garment that needs attention. More pieces can be handled in the same visit.
+                            </p>
+                          </div>
+                          <div className="hidden overflow-hidden rounded-[20px] md:block">
+                            <img src={IMAGES.wardrobe} alt="Wardrobe" className="aspect-[4/5] w-full object-cover" />
+                          </div>
+                        </div>
 
-                        <h4 className="mt-3 font-serif text-4xl leading-none md:text-5xl">
-                          Where should we come?
-                        </h4>
-                      </div>
+                        <div className="mt-8">
+                          <div className="mb-2 flex items-center justify-between">
+                            <p className="text-[8px] uppercase tracking-[0.18em] text-black/35">Who are we fitting?</p>
+                            {orderType !== "Just me" && (
+                              <span className="text-[8px] uppercase tracking-[0.14em] text-[#A77A42]">Group booking</span>
+                            )}
+                          </div>
 
-                      <div>
-                        <p className="mb-2 text-[8px] uppercase tracking-[0.18em] text-black/35">
-                          Visit type
-                        </p>
-
-                        <div className="grid grid-cols-3 gap-2">
-                          {["Just me", "Family", "Friends"].map(
-                            (type) => (
+                          <div className="grid grid-cols-3 gap-1.5">
+                            {["Just me", "Family", "Friends"].map((type) => (
                               <button
                                 type="button"
                                 key={type}
                                 onClick={() => setOrderType(type)}
-                                className={`border px-3 py-4 text-[8px] uppercase tracking-[0.1em] ${
+                                className={`rounded-xl border px-3 py-4 text-left transition ${
                                   orderType === type
-                                    ? "border-black bg-black text-white"
-                                    : "border-black/10"
+                                    ? "border-[#211719] bg-[#211719] text-white"
+                                    : "border-black/10 bg-white/35 hover:border-black/25"
                                 }`}
                               >
-                                {type}
+                                <span className="block font-serif text-lg">{type}</span>
+                                <span className={`mt-1 block text-[8px] ${orderType === type ? "text-white/45" : "text-black/30"}`}>
+                                  {type === "Just me" ? "One wardrobe" : "One doorstep visit"}
+                                </span>
                               </button>
-                            )
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        {[
-                          ["name", "Your name"],
-                          ["phone", "Phone number"],
-                          ["area", "Area / locality in Bengaluru"],
-                        ].map(([key, placeholder]) => (
-                          <input
-                            key={key}
-                            required
-                            type={
-                              key === "phone" ? "tel" : "text"
-                            }
-                            placeholder={placeholder}
-                            value={form[key as keyof typeof form]}
-                            onChange={(e) =>
-                              setForm({
-                                ...form,
-                                [key]: e.target.value,
-                              })
-                            }
-                            className="w-full border-b border-black/15 bg-transparent px-0 py-4 text-sm outline-none placeholder:text-black/30"
-                          />
-                        ))}
-
-                        <select
-                          required
-                          value={form.time}
-                          onChange={(e) =>
-                            setForm({
-                              ...form,
-                              time: e.target.value,
-                            })
-                          }
-                          className="w-full border-b border-black/15 bg-transparent px-0 py-4 text-sm outline-none"
-                        >
-                          <option value="">
-                            Preferred visit time
-                          </option>
-                          <option>Morning</option>
-                          <option>Afternoon</option>
-                          <option>Evening</option>
-                        </select>
-                      </div>
-
-                      {/* SUMMARY */}
-                      <div className="rounded-2xl bg-[#1B1515] p-5 text-white">
-                        <div className="flex items-end justify-between">
-                          <div>
-                            <p className="text-[8px] uppercase tracking-[0.2em] text-white/35">
-                              Estimated total
-                            </p>
-
-                            <p className="mt-1 font-serif text-4xl">
-                              ₹{total}
-                            </p>
+                            ))}
                           </div>
 
-                          {discountPercent > 0 && (
-                            <p className="text-[8px] uppercase tracking-[0.14em] text-[#B68A4C]">
-                              {discountPercent}% bundle saving
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="mt-5 border-t border-white/10 pt-4">
-                          <div className="flex justify-between text-[9px] text-white/40">
-                            <span>Subtotal</span>
-                            <span>₹{subtotal}</span>
-                          </div>
-
-                          {discount > 0 && (
-                            <div className="mt-2 flex justify-between text-[9px] text-[#B68A4C]">
-                              <span>Bundle saving</span>
-                              <span>-₹{discount}</span>
+                          {orderType !== "Just me" && (
+                            <div className="mt-2 flex items-center justify-between rounded-xl border border-[#A77A42]/25 bg-[#A77A42]/[0.07] px-4 py-3">
+                              <div>
+                                <p className="text-[8px] uppercase tracking-[0.15em] text-black/35">People in this visit</p>
+                                <p className="mt-0.5 text-[11px] text-black/55">Everyone can bring their garments.</p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <button type="button" onClick={() => setGroupSize(Math.max(2, groupSize - 1))} className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white">−</button>
+                                <span className="w-6 text-center font-serif text-lg">{groupSize}</span>
+                                <button type="button" onClick={() => setGroupSize(Math.min(8, groupSize + 1))} className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white">+</button>
+                              </div>
                             </div>
                           )}
                         </div>
 
-                        <p className="mt-5 text-[8px] leading-4 text-white/25">
-                          Final price is confirmed after the Fit
-                          Consultant assesses the garment.
-                        </p>
-                      </div>
+                        <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                          {GARMENTS.map((item) => (
+                            <button
+                              key={item.name}
+                              type="button"
+                              onClick={() => addGarment(item.name)}
+                              className="group relative aspect-[4/5] overflow-hidden rounded-[18px] bg-[#211719] text-left"
+                            >
+                              <img src={item.image} alt={item.name} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/90 via-transparent to-transparent" />
+                              <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[7px] uppercase tracking-[0.12em] text-black">₹{item.price}+</div>
+                              <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
+                                <div>
+                                  <p className="font-serif text-xl leading-none">{item.name}</p>
+                                  <p className="mt-1 text-[7px] uppercase tracking-[0.13em] text-white/45">Select garment</p>
+                                </div>
+                                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black transition group-hover:rotate-45"><Plus /></span>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
 
-                      <button
-                        type="submit"
-                        className="flex w-full items-center justify-center gap-3 rounded-full bg-[#1B1515] px-6 py-5 text-[9px] font-semibold uppercase tracking-[0.17em] text-white shadow-[0_14px_35px_rgba(27,21,21,0.22)] transition hover:bg-[#3A2528]"
-                      >
-                        Request my fit visit
-                        <Arrow />
-                      </button>
-                    </form>
-                  )}
-                </>
-              )}
+                        {selected.length > 0 && (
+                          <div className="mt-7 rounded-[20px] border border-black/10 bg-white/40 p-4 md:p-5">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-[8px] uppercase tracking-[0.2em] text-black/35">Your selection</p>
+                                <p className="mt-1 font-serif text-2xl">{selected.length} {selected.length === 1 ? "garment" : "garments"}</p>
+                              </div>
+                              {discountPercent > 0 && (
+                                <div className="rounded-full bg-[#A77A42]/10 px-3 py-2 text-[8px] uppercase tracking-[0.13em] text-[#8B642F]">
+                                  {discountPercent}% bundle saving
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+                              {selected.map((item) => (
+                                <div key={item.id} className="group relative min-w-[96px] overflow-hidden rounded-xl bg-black">
+                                  <img src={item.image} alt={item.name} className="h-[112px] w-[96px] object-cover" />
+                                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                                    <p className="font-serif text-sm text-white">{item.name}</p>
+                                  </div>
+                                  <button type="button" onClick={() => removeGarment(item.id)} className="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-black" aria-label={`Remove ${item.name}`}>×</button>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="mt-4 flex items-center justify-between border-t border-black/10 pt-4">
+                              <span className="text-[8px] uppercase tracking-[0.15em] text-black/35">Estimated total</span>
+                              <span className="font-serif text-2xl">₹{total}</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {step === 2 && (
+                      <div>
+                        <div className="grid gap-6 md:grid-cols-[1fr_180px] md:items-end">
+                          <div>
+                            <p className="text-[8px] uppercase tracking-[0.22em] text-[#A77A42]">Step 02 · Fit</p>
+                            <h4 className="mt-3 font-serif text-[clamp(42px,6vw,66px)] leading-[0.84] tracking-[-0.05em]">
+                              Tell us what
+                              <br />
+                              <span className="italic">feels wrong.</span>
+                            </h4>
+                            <p className="mt-5 max-w-[440px] text-sm leading-6 text-black/45">
+                              You don't need to know tailoring terminology. Choose what you notice — our Fit Consultant will assess the rest.
+                            </p>
+                          </div>
+                          <div className="hidden overflow-hidden rounded-[20px] md:block">
+                            <img src={IMAGES.consultation} alt="Fit consultation" className="aspect-square w-full object-cover" />
+                          </div>
+                        </div>
+
+                        <div className="mt-8 grid grid-cols-2 gap-2">
+                          {[
+                            ["Too loose", GARMENTS[0].image],
+                            ["Too tight", GARMENTS[1].image],
+                            ["Too long", GARMENTS[2].image],
+                            ["Too short", GARMENTS[4].image],
+                            ["Wrong shape", GARMENTS[5].image],
+                            ["Not sure", IMAGES.consultation],
+                          ].map(([issue, image]) => {
+                            const active = issues.includes(issue);
+                            return (
+                              <button
+                                key={issue}
+                                type="button"
+                                onClick={() => toggleIssue(issue)}
+                                className={`group relative min-h-[150px] overflow-hidden rounded-[18px] text-left transition ${active ? "ring-2 ring-[#A77A42] ring-offset-2 ring-offset-[#F7F1E7]" : ""}`}
+                              >
+                                <img src={image} alt="" className={`absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105 ${active ? "scale-105" : ""}`} />
+                                <div className={`absolute inset-0 ${active ? "bg-[#211719]/65" : "bg-[#211719]/45"}`} />
+                                <div className="absolute inset-x-4 bottom-4 flex items-end justify-between text-white">
+                                  <span className="font-serif text-2xl">{issue}</span>
+                                  <span className={`flex h-7 w-7 items-center justify-center rounded-full border ${active ? "border-white bg-white text-black" : "border-white/40 bg-black/10"}`}>
+                                    {active ? <Check /> : "+"}
+                                  </span>
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        <div className="mt-6 rounded-[20px] bg-[#211719] p-5 text-white">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-[8px] uppercase tracking-[0.2em] text-white/35">Selected garments</p>
+                              <p className="mt-1 font-serif text-2xl">{selected.length} {selected.length === 1 ? "piece" : "pieces"} to assess</p>
+                            </div>
+                            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-serif">{issues.length}</span>
+                          </div>
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            {selected.map((item) => (
+                              <span key={item.id} className="rounded-full bg-white/10 px-3 py-2 text-[8px] uppercase tracking-[0.12em] text-white/65">{item.name}</span>
+                            ))}
+                          </div>
+                          <p className="mt-4 text-[8px] leading-4 text-white/30">
+                            Not sure? That's completely fine. Select “Not sure” and we'll assess the fit at home.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {step === 3 && (
+                      <form id="linearera-booking-form" onSubmit={submitBooking}>
+                        <div className="grid gap-6 md:grid-cols-[1fr_190px] md:items-end">
+                          <div>
+                            <p className="text-[8px] uppercase tracking-[0.22em] text-[#A77A42]">Step 03 · Doorstep</p>
+                            <h4 className="mt-3 font-serif text-[clamp(42px,6vw,66px)] leading-[0.84] tracking-[-0.05em]">
+                              Where should
+                              <br />
+                              <span className="italic">we come?</span>
+                            </h4>
+                            <p className="mt-5 max-w-[430px] text-sm leading-6 text-black/45">
+                              A Fit Consultant visits your home, understands the garments and arranges the next step.
+                            </p>
+                          </div>
+                          <div className="hidden overflow-hidden rounded-[20px] md:block">
+                            <img src={IMAGES.home} alt="At-home LinearEra service" className="aspect-[4/5] w-full object-cover" />
+                          </div>
+                        </div>
+
+                        <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
+                            <span className="text-[8px] uppercase tracking-[0.16em] text-black/30">Your name</span>
+                            <input required type="text" placeholder="Enter your name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/25" />
+                          </label>
+                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
+                            <span className="text-[8px] uppercase tracking-[0.16em] text-black/30">Phone number</span>
+                            <input required type="tel" placeholder="+91" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/25" />
+                          </label>
+                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3 sm:col-span-2">
+                            <span className="text-[8px] uppercase tracking-[0.16em] text-black/30">Area / locality</span>
+                            <input required type="text" placeholder="Where in Bengaluru?" value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/25" />
+                          </label>
+                          <label className="rounded-[18px] border border-black/10 bg-white/35 sm:col-span-2">
+                            <span className="block px-4 pt-3 text-[8px] uppercase tracking-[0.16em] text-black/30">Preferred visit time</span>
+                            <select required value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className="w-full bg-transparent px-4 py-3 text-sm outline-none">
+                              <option value="">Choose a time</option>
+                              <option>Morning</option>
+                              <option>Afternoon</option>
+                              <option>Evening</option>
+                            </select>
+                          </label>
+                        </div>
+
+                        <div className="mt-6 overflow-hidden rounded-[22px] border border-black/10 bg-white/35">
+                          <div className="border-b border-black/10 px-5 py-4">
+                            <p className="text-[8px] uppercase tracking-[0.2em] text-black/35">What happens next</p>
+                          </div>
+                          <div className="grid sm:grid-cols-3">
+                            {[
+                              ["01", "We call", "Confirm your visit"],
+                              ["02", "We fit", "Assess your garments"],
+                              ["03", "We handle it", "Tailor + quality check"],
+                            ].map(([number, title, description]) => (
+                              <div key={number} className="border-b border-black/10 p-4 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+                                <span className="text-[8px] text-[#A77A42]">{number}</span>
+                                <p className="mt-2 font-serif text-xl">{title}</p>
+                                <p className="mt-1 text-[9px] leading-4 text-black/35">{description}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="mt-6 rounded-[22px] bg-[#211719] p-5 text-white md:p-6">
+                          <div className="flex items-end justify-between gap-4">
+                            <div>
+                              <p className="text-[8px] uppercase tracking-[0.2em] text-white/35">Estimated starting total</p>
+                              <p className="mt-1 font-serif text-4xl">₹{total}</p>
+                            </div>
+                            {discountPercent > 0 && (
+                              <span className="rounded-full bg-[#A77A42]/15 px-3 py-2 text-[8px] uppercase tracking-[0.13em] text-[#D4B277]">
+                                {discountPercent}% bundle saving
+                              </span>
+                            )}
+                          </div>
+                          <div className="mt-5 border-t border-white/10 pt-4">
+                            <div className="flex justify-between text-[9px] text-white/40"><span>Garments</span><span>{selected.length}</span></div>
+                            <div className="mt-2 flex justify-between text-[9px] text-white/40"><span>Subtotal</span><span>₹{subtotal}</span></div>
+                            {discount > 0 && <div className="mt-2 flex justify-between text-[9px] text-[#D4B277]"><span>Bundle saving</span><span>-₹{discount}</span></div>}
+                          </div>
+                          <p className="mt-5 text-[8px] leading-4 text-white/25">
+                            Starting prices are estimates. Final pricing is confirmed after the Fit Consultant assesses the garment.
+                          </p>
+                        </div>
+                      </form>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
 
-            {/* FOOTER */}
             {!submitted && (
-              <div className="border-t border-black/10 bg-[#EEE5DA] px-5 py-4 md:px-7">
-                <div className="flex items-center justify-between">
+              <div className="border-t border-black/10 bg-[#EEE5DA] px-5 py-4 md:px-8">
+                <div className="flex items-center justify-between gap-4">
                   <button
-                    onClick={() => {
-                      if (step === 1) {
-                        closeBooking();
-                      } else {
-                        setStep(step - 1);
-                      }
-                    }}
-                    className="px-3 py-3 text-[9px] uppercase tracking-[0.15em] text-black/35"
+                    type="button"
+                    onClick={() => step === 1 ? closeBooking() : setStep(step - 1)}
+                    className="px-2 py-3 text-[9px] uppercase tracking-[0.15em] text-black/35 transition hover:text-black"
                   >
                     {step === 1 ? "Cancel" : "Back"}
                   </button>
 
-                  {step < 3 && (
+                  {step < 3 ? (
                     <button
-                      disabled={
-                        step === 1 && selected.length === 0
-                      }
+                      type="button"
+                      disabled={(step === 1 && selected.length === 0) || (step === 2 && issues.length === 0)}
                       onClick={() => setStep(step + 1)}
-                      className="flex items-center gap-3 rounded-full bg-[#1B1515] px-6 py-3 text-[9px] uppercase tracking-[0.15em] text-white disabled:opacity-20"
+                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528] disabled:cursor-not-allowed disabled:opacity-20"
                     >
-                      Continue
+                      {step === 1 ? "Continue to fit" : "Continue to visit"}
+                      <Arrow />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => document.getElementById("linearera-booking-form")?.requestSubmit()}
+                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.17em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528]"
+                    >
+                      Request my fit visit
                       <Arrow />
                     </button>
                   )}
@@ -1604,6 +1584,7 @@ export default function Home() {
           </aside>
         </div>
       )}
+
     </main>
   );
 }
