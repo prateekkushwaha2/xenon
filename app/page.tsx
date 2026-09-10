@@ -1,5 +1,6 @@
-import { ArrowRight } from "lucide-react";
 "use client";
+
+import { ArrowRight } from "lucide-react";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
@@ -1635,3 +1636,4 @@ export default function Home() {
     </main>
   );
 }
+
