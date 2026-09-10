@@ -48,42 +48,52 @@ const IMAGES = {
 };
 
 const GARMENTS = [
-  {
-    name: "Shirt",
-    price: 199,
-    image:
-      "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=1000&q=90",
-  },
-  {
-    name: "Trousers",
-    price: 249,
-    image:
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=1000&q=90",
-  },
-  {
-    name: "Jeans",
-    price: 199,
-    image:
-      "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1000&q=90",
-  },
-  {
-    name: "T-shirt",
-    price: 149,
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=90",
-  },
-  {
-    name: "Dress",
-    price: 299,
-    image:
-      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1000&q=90",
-  },
-  {
-    name: "Jacket",
-    price: 399,
-    image:
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1000&q=90",
-  },
+  // Men
+  { name: "Shirt", price: 199, image: "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "T-shirt", price: 149, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Polo T-shirt", price: 169, image: "https://images.unsplash.com/photo-1625910513413-5fc45e8c3c4f?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Kurta", price: 249, image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Kurta Pajama", price: 399, image: "https://images.unsplash.com/photo-1597983073493-88cd35cf93c9?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Sherwani", price: 699, image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Bandhgala", price: 599, image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Blazer", price: 399, image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Suit", price: 699, image: "https://images.unsplash.com/photo-1598808503746-f34c53b9323e?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Waistcoat", price: 299, image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Trousers", price: 249, image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Jeans", price: 199, image: "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Chinos", price: 199, image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Shorts", price: 149, image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Joggers", price: 149, image: "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Dhoti", price: 299, image: "https://images.unsplash.com/photo-1583391733981-849840a7b5f1?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+  { name: "Veshti", price: 299, image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=90", category: "Men" },
+
+  // Women
+  { name: "Saree", price: 399, image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Blouse", price: 249, image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Salwar Suit", price: 399, image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Anarkali", price: 449, image: "https://images.unsplash.com/photo-1597983073493-88cd35cf93c9?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Lehenga", price: 599, image: "https://images.unsplash.com/photo-1583391733981-849840a7b5f1?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Gown", price: 499, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Dress", price: 299, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Jumpsuit", price: 299, image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Skirt", price: 199, image: "https://images.unsplash.com/photo-1583496661160-fb5886a13d27?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Palazzo", price: 199, image: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Leggings", price: 149, image: "https://images.unsplash.com/photo-1506629905607-d9f1c3e4d4b7?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Women’s Jeans", price: 199, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Top", price: 149, image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Kurti", price: 249, image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Co-ord Set", price: 299, image: "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Shrug", price: 199, image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Women’s Blazer", price: 399, image: "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+  { name: "Women’s Jacket", price: 399, image: "https://images.unsplash.com/photo-1543076447-215ad9ba6923?auto=format&fit=crop&w=1000&q=90", category: "Women" },
+
+  // Kids / shared wardrobe
+  { name: "Kids Shirt", price: 149, image: "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=1000&q=90", category: "Kids" },
+  { name: "Kids Dress", price: 199, image: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&w=1000&q=90", category: "Kids" },
+  { name: "Kids Kurta", price: 199, image: "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?auto=format&fit=crop&w=1000&q=90", category: "Kids" },
+  { name: "Kids Jeans", price: 149, image: "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1000&q=90", category: "Kids" },
+  { name: "Hoodie", price: 199, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1000&q=90", category: "All" },
+  { name: "Sweatshirt", price: 199, image: "https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=1000&q=90", category: "All" },
 ];
 
 const PROBLEMS = [
@@ -200,6 +210,9 @@ export default function Home() {
   const [step, setStep] = useState(1);
   const [selected, setSelected] = useState<Garment[]>([]);
   const [issues, setIssues] = useState<string[]>([]);
+  const [customGarment, setCustomGarment] = useState("");
+  const [garmentSearch, setGarmentSearch] = useState("");
+  const [garmentCategory, setGarmentCategory] = useState("All");
   const [orderType, setOrderType] = useState("Just me");
   const [groupSize, setGroupSize] = useState(2);
   const [submitted, setSubmitted] = useState(false);
@@ -228,6 +241,15 @@ export default function Home() {
     };
   }, [bookingOpen]);
 
+  const filteredGarments = useMemo(() => {
+    const query = garmentSearch.trim().toLowerCase();
+    return GARMENTS.filter((item) => {
+      const matchesCategory = garmentCategory === "All" || item.category === garmentCategory || item.category === "All";
+      const matchesSearch = !query || item.name.toLowerCase().includes(query);
+      return matchesCategory && matchesSearch;
+    });
+  }, [garmentSearch, garmentCategory]);
+
   const addGarment = (name: string) => {
     const garment = GARMENTS.find((item) => item.name === name);
 
@@ -240,6 +262,22 @@ export default function Home() {
         id: Date.now() + Math.random(),
       },
     ]);
+  };
+
+  const addCustomGarment = () => {
+    const name = customGarment.trim();
+    if (!name) return;
+
+    setSelected((current) => [
+      ...current,
+      {
+        id: Date.now() + Math.random(),
+        name,
+        price: 0,
+        image: IMAGES.wardrobeRoom,
+      },
+    ]);
+    setCustomGarment("");
   };
 
   const removeGarment = (id: number) => {
@@ -265,12 +303,14 @@ export default function Home() {
     0
   );
 
+  const pricedGarments = selected.filter((item) => item.price > 0).length;
+
   const discountPercent =
-    selected.length >= 5
+    pricedGarments >= 5
       ? 20
-      : selected.length >= 3
+      : pricedGarments >= 3
       ? 15
-      : selected.length >= 2
+      : pricedGarments >= 2
       ? 10
       : 0;
 
@@ -303,9 +343,9 @@ export default function Home() {
         <div className="mx-auto flex max-w-[1440px] items-center justify-between rounded-full border border-[#C7A56C]/20 bg-[#211719]/70 px-4 py-3 text-white shadow-xl backdrop-blur-xl md:px-6">
           <a
             href="#top"
-            className="font-serif text-[25px] tracking-[-0.05em]"
+            className="font-serif text-[25px] font-medium tracking-[0.12em]"
           >
-            LinearEra
+            L’ERA
           </a>
 
           <nav className="hidden items-center gap-8 text-sm uppercase tracking-[0.18em] lg:flex">
@@ -386,7 +426,7 @@ export default function Home() {
 
         <div className="absolute bottom-7 right-7 hidden text-right text-white md:block">
           <p className="text-sm uppercase tracking-[0.2em] text-white/60">
-            LinearEra
+            L’ERA
           </p>
           <p className="font-serif text-2xl">Fit Lives Better.</p>
         </div>
@@ -399,7 +439,7 @@ export default function Home() {
       <section className="bg-[#24191B] px-6 py-24 text-[#F7F1E7] md:px-12 md:py-36">
         <div className="mx-auto grid max-w-[1350px] gap-12 lg:grid-cols-[0.7fr_1.6fr]">
           <p className="text-xs uppercase tracking-[0.28em] text-white/55">
-            Why LinearEra
+            Why L’ERA
           </p>
 
           <div>
@@ -548,7 +588,7 @@ export default function Home() {
 
             <div>
               <p className="text-xs uppercase tracking-[0.25em] text-black/55">
-                The LinearEra way
+                The L’ERA way
               </p>
 
               <h2 className="mt-5 font-serif text-[clamp(50px,6vw,88px)] leading-[0.87] tracking-[-0.06em]">
@@ -1111,7 +1151,7 @@ export default function Home() {
 
         <div className="relative mx-auto flex min-h-[720px] max-w-[1450px] flex-col justify-end px-6 pb-14 md:px-12 md:pb-20">
           <p className="text-xs uppercase tracking-[0.28em] text-white/65">
-            LinearEra
+            L’ERA
           </p>
 
           <h2 className="mt-5 max-w-[1100px] font-serif text-[clamp(65px,10vw,145px)] leading-[0.76] tracking-[-0.065em] text-white">
@@ -1146,7 +1186,7 @@ export default function Home() {
         <div className="mx-auto flex max-w-[1400px] flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="font-serif text-4xl tracking-[-0.05em]">
-              LinearEra
+              L’ERA
             </p>
 
             <p className="mt-2 text-xs text-white/50">
@@ -1162,7 +1202,7 @@ export default function Home() {
           </div>
 
           <p className="text-xs text-white/20">
-            © {new Date().getFullYear()} LinearEra
+            © {new Date().getFullYear()} L’ERA
           </p>
         </div>
       </footer>
@@ -1196,7 +1236,7 @@ export default function Home() {
           <aside className="absolute right-0 top-0 flex h-full w-full max-w-[760px] flex-col overflow-hidden bg-[#F7F1E7] shadow-[-30px_0_100px_rgba(18,13,14,0.28)]">
             <div className="flex items-center justify-between border-b border-black/10 bg-[#211719] px-5 py-4 text-white md:px-8">
               <div className="flex items-center gap-3">
-                <span className="font-serif text-xl tracking-[-0.04em]">LinearEra</span>
+                <span className="font-serif text-xl font-medium tracking-[0.12em]">L’ERA</span>
                 <span className="h-3 w-px bg-white/20" />
                 <span className="text-sm uppercase tracking-[0.2em] text-white/65">
                   Fit visit
@@ -1252,10 +1292,10 @@ export default function Home() {
                   <div className="flex min-h-[620px] flex-col justify-between">
                     <div>
                       <div className="relative mb-8 aspect-[16/7] overflow-hidden rounded-[24px]">
-                        <img src={IMAGES.consultation} alt="LinearEra fit consultation" className="h-full w-full object-cover" />
+                        <img src={IMAGES.consultation} alt="L’ERA fit consultation" className="h-full w-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#211719]/80 via-transparent to-transparent" />
                         <div className="absolute bottom-5 left-5 text-white">
-                          <p className="text-xs uppercase tracking-[0.22em] text-white/55">LinearEra</p>
+                          <p className="text-xs uppercase tracking-[0.22em] text-white/55">L’ERA</p>
                           <p className="mt-1 font-serif text-2xl">Your fit journey starts here.</p>
                         </div>
                       </div>
@@ -1273,7 +1313,7 @@ export default function Home() {
                       onClick={closeBooking}
                       className="mt-10 w-full rounded-full bg-[#211719] px-7 py-5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#3A2528]"
                     >
-                      Back to LinearEra
+                      Back to L’ERA
                     </button>
                   </div>
                 ) : (
@@ -1340,8 +1380,42 @@ export default function Home() {
                           )}
                         </div>
 
-                        <div id="linearera-garment-picker" className="mt-8 scroll-mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                          {GARMENTS.map((item) => (
+                        <div id="linearera-garment-picker" className="mt-8 scroll-mt-6">
+                          <div className="mb-4">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                              <div>
+                                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#211719]">Choose your garments</p>
+                                <p className="mt-1 text-sm leading-5 text-black/55">Search by name or browse by who it’s for.</p>
+                              </div>
+                              <div className="relative w-full sm:max-w-[280px]">
+                                <input
+                                  type="search"
+                                  value={garmentSearch}
+                                  onChange={(e) => setGarmentSearch(e.target.value)}
+                                  placeholder="Search shirt, saree, sherwani..."
+                                  className="min-h-[48px] w-full rounded-xl border border-black/10 bg-white px-4 pr-10 text-base text-black outline-none placeholder:text-black/40 focus:border-[#A77A42]"
+                                  aria-label="Search garments"
+                                />
+                                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-black/45">⌕</span>
+                              </div>
+                            </div>
+                            <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+                              {["All", "Men", "Women", "Kids"].map((category) => (
+                                <button
+                                  key={category}
+                                  type="button"
+                                  onClick={() => setGarmentCategory(category)}
+                                  className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${garmentCategory === category ? "bg-[#211719] text-white" : "border border-black/10 bg-white text-black/65 hover:border-black/20"}`}
+                                >
+                                  {category === "All" ? "Everyone" : category}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {filteredGarments.length > 0 ? (
+                            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                          {filteredGarments.map((item) => (
                             <button
                               key={item.name}
                               type="button"
@@ -1360,24 +1434,48 @@ export default function Home() {
                               </div>
                             </button>
                           ))}
+                            </div>
+                          ) : (
+                            <div className="rounded-2xl border border-dashed border-black/15 bg-white/50 p-6 text-center">
+                              <p className="text-base font-semibold text-[#211719]">We don’t have that in the list yet.</p>
+                              <p className="mt-1 text-sm text-black/55">Add the garment below and your Fit Consultant can assess it at home.</p>
+                            </div>
+                          )}
                         </div>
 
-                        {selected.length > 0 && (
-                           <div className="mb-3 flex items-center justify-between rounded-[16px] border border-[#A77A42]/20 bg-[#A77A42]/[0.06] px-4 py-3">
-                             <div>
-                               <p className="text-xs font-medium uppercase tracking-[0.16em] text-black/60">Add another garment</p>
-                               <p className="mt-0.5 text-xs text-black/55">Add more pieces to the same doorstep visit.</p>
-                             </div>
-                             <button
-                               type="button"
-                               onClick={() => document.getElementById("linearera-garment-picker")?.scrollIntoView({ behavior: "smooth", block: "center" })}
-                               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#211719] text-white transition hover:scale-105"
-                               aria-label="Add another garment"
-                             >
-                               <Plus />
-                             </button>
-                           </div>
-                         )}
+                        <div className="mt-4 rounded-[18px] border border-[#A77A42]/25 bg-[#A77A42]/[0.06] p-4 sm:p-5">
+                          <div className="flex items-start gap-3">
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#211719]">Can’t find your garment?</p>
+                              <p className="mt-1 text-sm leading-5 text-black/55">Type it below — for example, gown, sherwani, kurta or anything else.</p>
+                            </div>
+                          </div>
+                          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                            <input
+                              type="text"
+                              value={customGarment}
+                              onChange={(e) => setCustomGarment(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  addCustomGarment();
+                                }
+                              }}
+                              placeholder="e.g. Gown, Sherwani"
+                              className="min-h-[48px] flex-1 rounded-xl border border-black/10 bg-white px-4 text-base text-black outline-none placeholder:text-black/40 focus:border-[#A77A42]"
+                              aria-label="Enter a garment not shown in the list"
+                            />
+                            <button
+                              type="button"
+                              onClick={addCustomGarment}
+                              disabled={!customGarment.trim()}
+                              className="min-h-[48px] rounded-xl bg-[#211719] px-5 text-sm font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-[#3A2528] disabled:cursor-not-allowed disabled:opacity-30"
+                            >
+                              Add garment
+                            </button>
+                          </div>
+                          <p className="mt-2 text-xs leading-5 text-black/50">Price for custom garments is confirmed by your Fit Consultant after seeing the garment.</p>
+                        </div>
 
                          {selected.length > 0 && (
                           <div className="mt-7 rounded-[20px] border border-black/10 bg-white/40 p-4 md:p-5">
@@ -1406,8 +1504,8 @@ export default function Home() {
                             </div>
 
                             <div className="mt-4 flex items-center justify-between border-t border-black/10 pt-4">
-                              <span className="text-sm uppercase tracking-[0.15em] text-black/55">Estimated total</span>
-                              <span className="font-serif text-2xl">₹{total}</span>
+                              <span className="text-sm uppercase tracking-[0.15em] text-black/55">Estimated price</span>
+                              <span className="font-serif text-2xl">{selected.some((item) => item.price === 0) ? "Confirmed at home" : `₹${total}`}</span>
                             </div>
                           </div>
                         )}
@@ -1512,7 +1610,7 @@ export default function Home() {
                             </p>
                           </div>
                           <div className="hidden overflow-hidden rounded-[20px] md:block">
-                            <img src={IMAGES.home} alt="At-home LinearEra service" className="aspect-[4/5] w-full object-cover" />
+                            <img src={IMAGES.home} alt="At-home L’ERA service" className="aspect-[4/5] w-full object-cover" />
                           </div>
                         </div>
 
@@ -1572,11 +1670,13 @@ export default function Home() {
                             <div className="p-5 sm:p-6 md:p-7">
                               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/55">Estimated starting price</p>
                               <div className="mt-2 flex items-end gap-3">
-                                <p className="font-serif text-5xl leading-none sm:text-6xl">₹{total}</p>
-                                {discount > 0 && <span className="mb-1 text-sm text-white/40 line-through">₹{subtotal}</span>}
+                                <p className="font-serif text-4xl leading-none sm:text-5xl">{selected.some((item) => item.price === 0) ? "At home" : `₹${total}`}</p>
+                                {!selected.some((item) => item.price === 0) && discount > 0 && <span className="mb-1 text-sm text-white/40 line-through">₹{subtotal}</span>}
                               </div>
                               <p className="mt-4 max-w-[520px] text-sm leading-6 text-white/65">
-                                This is an estimate based on your selected garments. The final alteration price is confirmed only after your Fit Consultant sees the garments and understands the fit required.
+                                {selected.some((item) => item.price === 0)
+                                  ? "Your selection includes a garment outside our standard list. Your Fit Consultant will assess it and confirm the final price at home."
+                                  : "This is an estimate based on your selected garments. The final alteration price is confirmed only after your Fit Consultant sees the garments and understands the fit required."}
                               </p>
                             </div>
 
@@ -1605,7 +1705,7 @@ export default function Home() {
                           <div className="border-t border-white/10 px-5 py-4 sm:px-6">
                             <div className="flex items-center justify-between text-sm text-white/60">
                               <span>{selected.length} {selected.length === 1 ? "garment" : "garments"}</span>
-                              <span>Estimated ₹{total}</span>
+                              <span>{selected.some((item) => item.price === 0) ? "Price confirmed at home" : `Estimated ₹${total}`}</span>
                             </div>
                             {discount > 0 && <div className="mt-2 flex justify-between text-sm text-[#D4B277]"><span>Bundle saving</span><span>-₹{discount}</span></div>}
                             <p className="mt-3 text-sm leading-5 text-white/45">Final pricing is confirmed at your doorstep before the alteration proceeds.</p>
