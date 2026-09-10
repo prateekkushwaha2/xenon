@@ -393,7 +393,7 @@ export default function Home() {
               </span>
             </div>
 
-            <h1 className="max-w-[1100px] font-serif text-[clamp(62px,10.5vw,155px)] leading-[0.76] tracking-[-0.065em] text-white">
+            <h1 className="max-w-[1100px] font-serif text-[clamp(52px,9.5vw,132px)] leading-[0.8] tracking-[-0.065em] text-white">
               STOP GOING
               <br />
               TO TAILORS.
@@ -429,53 +429,6 @@ export default function Home() {
             L’ERA
           </p>
           <p className="font-serif text-2xl">Fit Lives Better.</p>
-        </div>
-      </section>
-
-      {/* =====================================================
-          INTRO
-      ===================================================== */}
-
-      <section className="bg-[#24191B] px-6 py-24 text-[#F7F1E7] md:px-12 md:py-36">
-        <div className="mx-auto grid max-w-[1350px] gap-12 lg:grid-cols-[0.7fr_1.6fr]">
-          <p className="text-xs uppercase tracking-[0.28em] text-white/55">
-            Why L’ERA
-          </p>
-
-          <div>
-            <h2 className="font-serif text-[clamp(48px,6.5vw,92px)] leading-[0.9] tracking-[-0.055em]">
-              A simple alteration
-              <br />
-              shouldn't require
-              <br />
-              <span className="text-[#B68A4C]">
-                your entire afternoon.
-              </span>
-            </h2>
-
-            <div className="mt-10 grid gap-5 border-t border-white/10 pt-7 sm:grid-cols-3">
-              <div>
-                <p className="font-serif text-3xl">01</p>
-                <p className="mt-2 text-xs text-white/60">
-                  You stay home.
-                </p>
-              </div>
-
-              <div>
-                <p className="font-serif text-3xl">02</p>
-                <p className="mt-2 text-xs text-white/60">
-                  We understand the fit.
-                </p>
-              </div>
-
-              <div>
-                <p className="font-serif text-3xl">03</p>
-                <p className="mt-2 text-xs text-white/60">
-                  Your clothes come back.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -831,70 +784,6 @@ export default function Home() {
       </section>
 
       {/* =====================================================
-          SERVICES
-      ===================================================== */}
-
-      <section
-        id="services"
-        className="bg-[#F7F1E7] px-5 py-24 md:px-10 md:py-36"
-      >
-        <div className="mx-auto max-w-[1450px]">
-          <div className="mb-12 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-xs uppercase tracking-[0.25em] text-black/55">
-                Your wardrobe
-              </p>
-
-              <h2 className="mt-4 font-serif text-[clamp(55px,7vw,100px)] leading-[0.83] tracking-[-0.06em]">
-                What needs
-                <br />
-                fixing?
-              </h2>
-            </div>
-
-            <p className="max-w-[300px] text-xs leading-5 text-black/60">
-              Pick a garment. Tell us what feels wrong.
-              We'll handle the rest.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-            {GARMENTS.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => startBooking(item.name)}
-                className="group relative aspect-[4/5] overflow-hidden rounded-[2px] bg-[#DED2C3] text-left shadow-[0_18px_45px_rgba(36,25,27,0.10)]"
-              >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-
-                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white md:bottom-6 md:left-6 md:right-6">
-                  <div>
-                    <h3 className="font-serif text-2xl md:text-4xl">
-                      {item.name}
-                    </h3>
-
-                    <p className="mt-1 text-sm uppercase tracking-[0.15em] text-white/55">
-                      From ₹{item.price}
-                    </p>
-                  </div>
-
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition group-hover:rotate-45">
-                    <Plus />
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
           FIT CHECK
       ===================================================== */}
 
@@ -974,83 +863,69 @@ export default function Home() {
 
       <section
         id="pricing"
-        className="bg-[#211719] px-5 py-24 text-[#F7F1E7] md:px-10 md:py-36"
+        className="bg-[#211719] px-5 py-20 text-[#F7F1E7] md:px-10 md:py-28"
       >
-        <div className="mx-auto max-w-[1400px]">
-          <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div>
-              <p className="text-xs uppercase tracking-[0.25em] text-white/55">
-                Pricing
+              <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/60">
+                Simple pricing
               </p>
 
-              <h2 className="mt-5 font-serif text-[clamp(58px,7vw,100px)] leading-[0.82] tracking-[-0.06em]">
-                More clothes.
+              <h2 className="mt-4 max-w-[620px] font-serif text-[clamp(46px,6vw,78px)] leading-[0.86] tracking-[-0.055em]">
+                Bring more.
                 <br />
-                <span className="italic text-[#B68A4C]">
-                  Less per piece.
-                </span>
+                <span className="italic text-[#C7A56C]">Pay less per piece.</span>
               </h2>
 
-              <p className="mt-8 max-w-[400px] text-sm leading-6 text-white/65">
-                Combine garments during the same doorstep visit
-                and unlock bundle savings.
+              <p className="mt-7 max-w-[470px] text-base leading-7 text-white/70">
+                Combine garments in the same doorstep visit and unlock a better
+                price across the order.
               </p>
 
-              <div className="mt-10 space-y-3">
-                {[
-                  ["2 garments", "10% off"],
-                  ["3–4 garments", "15% off"],
-                  ["5+ garments", "20% off"],
-                ].map(([count, saving]) => (
-                  <div
-                    key={count}
-                    className="flex items-center justify-between border-b border-white/10 py-4"
-                  >
-                    <span className="font-serif text-2xl">
-                      {count}
-                    </span>
+              <button
+                onClick={() => startBooking()}
+                className="mt-8 inline-flex items-center rounded-full bg-[#F7F1E7] px-6 py-3.5 text-sm font-semibold text-[#211719] transition hover:bg-white"
+              >
+                Check your price
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </button>
+            </div>
 
-                    <span className="text-sm uppercase tracking-[0.15em] text-[#B68A4C]">
-                      {saving}
+            <div className="grid gap-3">
+              {[
+                ["2 garments", "10% off"],
+                ["3–4 garments", "15% off"],
+                ["5+ garments", "20% off"],
+              ].map(([count, saving], index) => (
+                <div
+                  key={count}
+                  className="flex items-center justify-between rounded-2xl border border-white/10 bg-[#2A1D1F] px-6 py-5 md:px-7 md:py-6"
+                >
+                  <div className="flex items-center gap-5">
+                    <span className="font-serif text-2xl text-white/45">
+                      0{index + 1}
                     </span>
+                    <span className="text-base font-medium">{count}</span>
                   </div>
-                ))}
+
+                  <span className="rounded-xl bg-[#3A2925] px-4 py-2 text-sm font-semibold text-[#C7A56C]">
+                    {saving}
+                  </span>
+                </div>
+              ))}
+
+              <div className="mt-2 rounded-2xl border border-[#C7A56C]/25 bg-[#F7F1E7] p-5 text-[#211719]">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#80664D]">
+                  Final price
+                </p>
+                <p className="mt-2 text-base leading-6">
+                  Starting prices are shown online. Your Fit Consultant confirms
+                  the final alteration price after seeing the garments at home.
+                </p>
               </div>
             </div>
-
-            <div className="grid grid-cols-2 gap-px bg-white/10 md:grid-cols-3">
-              {GARMENTS.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => startBooking(item.name)}
-                  className="group bg-[#2A1D1F] p-3 text-left md:p-4"
-                >
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="h-full w-full object-cover opacity-80 transition-transform duration-300 group-hover:scale-[1.02] group-hover:opacity-100"
-                    />
-                  </div>
-
-                  <div className="mt-3 flex items-end justify-between">
-                    <span className="font-serif text-xl">
-                      {item.name}
-                    </span>
-
-                    <span className="text-xs">
-                      ₹{item.price}
-                    </span>
-                  </div>
-                </button>
-              ))}
-            </div>
           </div>
-
-          <p className="mt-7 text-xs leading-5 text-white/65">
-            Starting prices for the pilot. Final
-            pricing can vary depending on the alteration required.
-          </p>
         </div>
       </section>
 
