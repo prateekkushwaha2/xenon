@@ -1,8 +1,17 @@
 'use client'
 
-import { useState } from 'react'
-
+import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
+
+const ORDER_STEPS = [
+  'Request Received',
+  'Visit Confirmed',
+  'Fit Assessed',
+  'In Tailoring',
+  'Quality Check',
+  'Ready for Return',
+  'Completed',
+]
 
 type Order = {
   id: number
@@ -10,295 +19,140 @@ type Order = {
   status: string
   created_at: string
   tracking_id: string
+  preferred_visit_date?: string | null
+  preferred_visit_time?: string | null
 }
 
 export default function TrackPage() {
-  const [
-    trackingId,
-    setTrackingId
-  ] = useState('')
+  const [trackingId, setTrackingId] = useState('')
+  const [order, setOrder] = useState<Order | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [searched, setSearched] = useState(false)
 
-  const [orders, setOrders] =
-    useState<Order[]>([])
-
-  const [loading, setLoading] =
-    useState(false)
-
-  const orderSteps = [
-    'packing',
-    'Packed',
-    'Shipped',
-    'Delivered'
-  ]
-
-  const searchOrders = async () => {
-    if (!trackingId) {
-      alert('Enter tracking ID')
-
-      return
+  useEffect(() => {
+    const value = new URLSearchParams(window.location.search).get('tracking')
+    if (value) {
+      setTrackingId(value.toUpperCase())
     }
+  }, [])
+
+  const searchOrder = async () => {
+    const id = trackingId.trim().toUpperCase()
+
+    if (!id) return
 
     try {
       setLoading(true)
+      setSearched(true)
 
-      const { data, error } =
-        await supabase
-          .from('orders')
-          .select('*')
-          .eq(
-            'tracking_id',
-            trackingId.toUpperCase()
-          )
-          .order('created_at', {
-            ascending: false
-          })
+      const { data, error } = await supabase
+        .from('orders')
+        .select('id,total,status,created_at,tracking_id,preferred_visit_date,preferred_visit_time')
+        .eq('tracking_id', id)
+        .maybeSingle()
 
-      if (error) {
-        console.log(error)
+      if (error) throw error
 
-        alert(
-          'Failed to fetch order'
-        )
-
-        return
-      }
-
-      setOrders(data || [])
+      setOrder(data || null)
     } catch (error) {
-      console.log(error)
+      console.error(error)
+      setOrder(null)
     } finally {
       setLoading(false)
     }
   }
 
+  const currentIndex = order
+    ? Math.max(0, ORDER_STEPS.indexOf(order.status))
+    : -1
+
   return (
-    <main className="min-h-screen bg-black text-white px-4 md:px-8 py-24">
-      <div className="max-w-5xl mx-auto">
-        
-        {/* Heading */}
-        <div className="mb-20 text-center">
-          <p className="uppercase tracking-[0.5em] text-[#d4af37] text-sm mb-5">
-            XENON ORDER TRACKING
-          </p>
-
-          <h1 className="text-5xl md:text-7xl font-light mb-8">
-            Track Your Order
+    <main className="min-h-screen bg-[#F7F1E7] text-[#211719] px-5 py-20 md:px-10 md:py-28">
+      <div className="mx-auto max-w-[1000px]">
+        <div className="text-center">
+          <p className="text-xs uppercase tracking-[0.35em] text-[#A77A42]">L’ERA</p>
+          <h1 className="mt-4 font-serif text-[clamp(54px,8vw,96px)] leading-[0.84] tracking-[-0.06em]">
+            Track your
+            <br />
+            <span className="italic">fit journey.</span>
           </h1>
-
-          <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
-            Enter your secure tracking ID to view your order status and delivery progress.
-          </p>
-                    <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
-            Check your email for Tracking id. In case of any issues, contact support.
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-6 text-black/55">
+            Enter the tracking ID you received after submitting your doorstep fit request.
           </p>
         </div>
 
-        {/* Search */}
-        <div className="border border-white/10 rounded-[2rem] bg-white/5 p-6 md:p-8 mb-16">
-          <div className="flex flex-col md:flex-row gap-5">
+        <div className="mt-12 rounded-[28px] border border-black/10 bg-white/50 p-5 md:p-7">
+          <div className="flex flex-col gap-3 md:flex-row">
             <input
-              type="text"
-              placeholder="Enter Tracking ID (Example: XN-84KD92)"
               value={trackingId}
-              onChange={(e) =>
-                setTrackingId(
-                  e.target.value
-                )
-              }
-              className="
-              flex-1
-              bg-black/30
-              border
-              border-white/10
-              rounded-2xl
-              px-6
-              py-5
-              outline-none
-              focus:border-[#d4af37]/40
-              "
+              onChange={(e) => setTrackingId(e.target.value.toUpperCase())}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') searchOrder()
+              }}
+              placeholder="Example: LE-A1B2C3D4"
+              className="min-h-[56px] flex-1 rounded-2xl border border-black/10 bg-white px-5 font-mono text-base uppercase outline-none placeholder:font-sans placeholder:normal-case placeholder:text-black/35 focus:border-[#A77A42]"
             />
-
             <button
-              onClick={searchOrders}
+              onClick={searchOrder}
               disabled={loading}
-              className="
-              px-8
-              py-5
-              rounded-full
-              bg-[#d4af37]
-              text-black
-              font-semibold
-              hover:bg-white
-              transition-all
-              duration-300
-              disabled:opacity-50
-              "
+              className="min-h-[56px] rounded-full bg-[#211719] px-8 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-[#3A2528] disabled:opacity-50"
             >
-              {loading
-                ? 'Searching...'
-                : 'Track Order'}
+              {loading ? 'Checking...' : 'Track request'}
             </button>
           </div>
         </div>
-{/* This website is made by prateek kushwaha github : @prateekkushwaha2*/}
-        {/* Orders */}
-        {orders.length === 0 ? (
-          <p className="text-white/40 text-center">
-            No orders found.
-          </p>
-        ) : (
-          <div className="grid gap-8">
-            {orders.map((order) => {
-              const currentStep =
-                orderSteps.indexOf(
-                  order.status
+
+        {searched && !loading && !order && (
+          <div className="mt-8 rounded-[24px] border border-[#A33A3A]/15 bg-[#A33A3A]/[0.05] p-6 text-center">
+            <p className="font-serif text-2xl">We couldn’t find that request.</p>
+            <p className="mt-2 text-sm text-black/55">Check the tracking ID and try again.</p>
+          </div>
+        )}
+
+        {order && (
+          <div className="mt-8 rounded-[28px] bg-[#211719] p-6 text-white md:p-8">
+            <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-white/45">Tracking ID</p>
+                <p className="mt-2 font-mono text-2xl tracking-[0.08em] text-[#D4B277]">{order.tracking_id}</p>
+                <p className="mt-3 text-sm text-white/40">Request #{order.id}</p>
+              </div>
+              <div className="md:text-right">
+                <span className="inline-flex rounded-full bg-[#D4AF37] px-4 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#211719]">
+                  {order.status}
+                </span>
+                {order.total > 0 && (
+                  <p className="mt-4 font-serif text-3xl text-[#D4B277]">₹{order.total} estimated</p>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {ORDER_STEPS.map((step, index) => {
+                const completed = index <= currentIndex
+                return (
+                  <div key={step} className="relative rounded-2xl border border-white/10 bg-white/[0.035] p-4">
+                    <div className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold ${completed ? 'bg-[#D4AF37] text-[#211719]' : 'bg-white/10 text-white/35'}`}>
+                      {completed ? '✓' : index + 1}
+                    </div>
+                    <p className={`mt-4 text-sm ${completed ? 'text-white' : 'text-white/35'}`}>{step}</p>
+                  </div>
                 )
+              })}
+            </div>
 
-              return (
-                <div
-                  key={order.id}
-                  className="
-                  border
-                  border-white/10
-                  rounded-[2rem]
-                  p-6
-                  md:p-8
-                  bg-white/5
-                  "
-                >
-                  {/* Top */}
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
-                    <div>
-                      <p className="text-white/50 mb-3">
-                        Tracking ID
-                      </p>
+            {(order.preferred_visit_date || order.preferred_visit_time) && (
+              <div className="mt-6 border-t border-white/10 pt-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-white/35">Requested visit</p>
+                <p className="mt-2 text-sm text-white/70">
+                  {order.preferred_visit_date || 'Date to be confirmed'} · {order.preferred_visit_time || 'Time to be confirmed'}
+                </p>
+              </div>
+            )}
 
-                      <h2 className="text-2xl md:text-3xl text-[#d4af37] mb-4">
-                        {order.tracking_id}
-                      </h2>
-
-                      <p className="text-white/40">
-                        Order #{order.id}
-                      </p>
-                    </div>
-
-                    <div className="md:text-right">
-                      <span
-                        className="
-                        inline-block
-                        px-5
-                        py-2
-                        rounded-full
-                        bg-[#d4af37]
-                        text-black
-                        font-semibold
-                        mb-4
-                        "
-                      >
-                        {order.status}
-                      </span>
-
-                      <h3 className="text-4xl text-[#d4af37] mb-3">
-                        ₹{order.total}
-                      </h3>
-
-                      <p className="text-white/40">
-                        {new Date(
-                          order.created_at
-                        ).toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Timeline */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    {orderSteps.map(
-                      (
-                        step,
-                        index
-                      ) => {
-                        const completed =
-                          index <=
-                          currentStep
-
-                        return (
-                          <div
-                            key={step}
-                            className="relative"
-                          >
-                            {/* Line */}
-                            {index <
-                              orderSteps.length -
-                                1 && (
-                              <div
-                                className={`
-                                absolute
-                                top-5
-                                left-1/2
-                                w-full
-                                h-[2px]
-                                ${
-                                  completed
-                                    ? 'bg-[#d4af37]'
-                                    : 'bg-white/10'
-                                }
-                                `}
-                              />
-                            )}
-
-                            {/* Circle */}
-                            <div
-                              className={`
-                              relative
-                              z-10
-                              w-10
-                              h-10
-                              rounded-full
-                              flex
-                              items-center
-                              justify-center
-                              text-sm
-                              font-semibold
-                              mb-4
-                              ${
-                                completed
-                                  ? `
-                                  bg-[#d4af37]
-                                  text-black
-                                  `
-                                  : `
-                                  bg-white/10
-                                  text-white/40
-                                  `
-                              }
-                              `}
-                            >
-                              {index + 1}
-                            </div>
-
-                            {/* Label */}
-                            <p
-                              className={`
-                              text-sm
-                              uppercase
-                              tracking-[0.2em]
-                              ${
-                                completed
-                                  ? 'text-white'
-                                  : 'text-white/40'
-                              }
-                              `}
-                            >
-                              {step}
-                            </p>
-                          </div>
-                        )
-                      }
-                    )}
-                  </div>
-                </div>
-              )
-            })}
+            <p className="mt-6 text-xs text-white/30">
+              Submitted {new Date(order.created_at).toLocaleString()}
+            </p>
           </div>
         )}
       </div>
