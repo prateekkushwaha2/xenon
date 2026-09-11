@@ -147,6 +147,55 @@ const FIT_ISSUES = [
   "Not sure",
 ];
 
+const VISIT_TIMES = [
+  {
+    value: "Morning · 9 AM–12 PM",
+    title: "Morning",
+    detail: "9 AM – 12 PM",
+  },
+  {
+    value: "Afternoon · 12–4 PM",
+    title: "Afternoon",
+    detail: "12 PM – 4 PM",
+  },
+  {
+    value: "Evening · 5–8 PM",
+    title: "Evening",
+    detail: "5 PM – 8 PM",
+  },
+];
+
+function getNextVisitDates() {
+  const dates: { value: string; day: string; date: string; month: string }[] = [];
+  const now = new Date();
+
+  for (let i = 0; i < 7; i += 1) {
+    const date = new Date(now);
+    date.setHours(12, 0, 0, 0);
+    date.setDate(now.getDate() + i);
+
+    const value = [
+      date.getFullYear(),
+      String(date.getMonth() + 1).padStart(2, "0"),
+      String(date.getDate()).padStart(2, "0"),
+    ].join("-");
+
+    dates.push({
+      value,
+      day:
+        i === 0
+          ? "Today"
+          : i === 1
+            ? "Tomorrow"
+            : date.toLocaleDateString("en-IN", { weekday: "short" }),
+      date: String(date.getDate()),
+      month: date.toLocaleDateString("en-IN", { month: "short" }),
+    });
+  }
+
+  return dates;
+}
+
 function Arrow() {
   return (
     <svg
@@ -221,6 +270,8 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
 
   const [appointmentDate, setAppointmentDate] = useState("");
+  const [visitDates, setVisitDates] = useState<{ value: string; day: string; date: string; month: string }[]>([]);
+  const [profileLoaded, setProfileLoaded] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -249,6 +300,48 @@ export default function Home() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [bookingOpen]);
+
+  useEffect(() => {
+    setVisitDates(getNextVisitDates());
+
+    try {
+      const saved = window.localStorage.getItem("lera_customer_profile");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setForm((current) => ({
+          ...current,
+          name: typeof parsed.name === "string" ? parsed.name : "",
+          phone: typeof parsed.phone === "string" ? parsed.phone : "",
+          email: typeof parsed.email === "string" ? parsed.email : "",
+          area: typeof parsed.area === "string" ? parsed.area : "",
+          pincode: typeof parsed.pincode === "string" ? parsed.pincode : "",
+        }));
+      }
+    } catch (error) {
+      console.error("Could not load saved L’ERA profile", error);
+    } finally {
+      setProfileLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!profileLoaded) return;
+
+    try {
+      window.localStorage.setItem(
+        "lera_customer_profile",
+        JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          area: form.area,
+          pincode: form.pincode,
+        }),
+      );
+    } catch (error) {
+      console.error("Could not save L’ERA profile", error);
+    }
+  }, [form, profileLoaded]);
 
   const filteredGarments = useMemo(() => {
     const query = garmentSearch.trim().toLowerCase();
@@ -295,11 +388,31 @@ export default function Home() {
     );
   };
 
-  const startBooking = (garment?: string) => {
-    if (garment) addGarment(garment);
-
+  const resetBookingSession = () => {
     setStep(1);
+    setSelected([]);
+    setIssues([]);
+    setCustomGarment("");
+    setGarmentSearch("");
+    setGarmentCategory("All");
+    setOrderType("Just me");
+    setGroupSize(2);
     setSubmitted(false);
+    setAppointmentDate("");
+    setForm((current) => ({ ...current, time: "" }));
+    setTrackingId("");
+    setSubmitError("");
+  };
+
+  const startBooking = (garment?: string, initialOrderType?: string) => {
+    resetBookingSession();
+    if (initialOrderType) setOrderType(initialOrderType);
+    if (garment) {
+      const item = GARMENTS.find((entry) => entry.name === garment);
+      if (item) {
+        setSelected([{ ...item, id: Date.now() + Math.random() }]);
+      }
+    }
     setBookingOpen(true);
   };
 
@@ -455,11 +568,19 @@ export default function Home() {
             L’ERA
           </a>
 
+          <a
+            href="/track"
+            className="ml-auto mr-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/70 transition hover:text-white lg:hidden"
+          >
+            Track
+          </a>
+
           <nav className="hidden items-center gap-8 text-sm uppercase tracking-[0.18em] lg:flex">
             <a href="#why">Why us</a>
             <a href="#services">Services</a>
             <a href="#pricing">Pricing</a>
             <a href="#process">How it works</a>
+            <a href="/track">Track</a>
           </nav>
 
           <button
@@ -1106,8 +1227,7 @@ export default function Home() {
 
             <button
               onClick={() => {
-                setOrderType("Family / Friends");
-                startBooking();
+                startBooking(undefined, "Family");
               }}
               className="mt-9 flex items-center gap-3 rounded-full bg-[#1B1515] px-7 py-4 text-xs uppercase tracking-[0.17em] text-white"
             >
@@ -1181,6 +1301,7 @@ export default function Home() {
             <a href="#services">Services</a>
             <a href="#pricing">Pricing</a>
             <a href="#process">How it works</a>
+            <a href="/track">Track request</a>
           </div>
 
           <p className="text-xs text-white/20">
@@ -1304,12 +1425,21 @@ export default function Home() {
                         )}
                       </div>
                     </div>
-                    <button
-                      onClick={closeBooking}
-                      className="mt-10 w-full rounded-full bg-[#211719] px-7 py-5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#3A2528]"
-                    >
-                      Back to L’ERA
-                    </button>
+                    <div className="mt-10 grid gap-2 sm:grid-cols-2">
+                      <button
+                        type="button"
+                        onClick={() => startBooking()}
+                        className="w-full rounded-full bg-[#211719] px-7 py-5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#3A2528]"
+                      >
+                        Book another fit visit
+                      </button>
+                      <a
+                        href="/track"
+                        className="flex w-full items-center justify-center rounded-full border border-black/10 bg-white/60 px-7 py-5 text-xs font-semibold uppercase tracking-[0.18em] text-[#211719] transition hover:bg-white"
+                      >
+                        Track this request
+                      </a>
+                    </div>
                   </div>
                 ) : (
                   <>
@@ -1609,54 +1739,158 @@ export default function Home() {
                           </div>
                         </div>
 
-                        <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
-                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Your name</span>
-                            <input required type="text" placeholder="Enter your name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
-                          </label>
-                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
-                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Phone number</span>
-                            <input required type="tel" placeholder="+91" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
-                          </label>
-                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3 sm:col-span-2">
-                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Email <span className="normal-case tracking-normal text-black/35">(optional)</span></span>
-                            <input type="email" placeholder="For email updates, if you want them" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
-                          </label>
-                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
-                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Area / locality</span>
-                            <input required type="text" placeholder="HSR Layout, Sector 6" value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
-                          </label>
-                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
-                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Pincode</span>
-                            <input
-                              required
-                              type="text"
-                              inputMode="numeric"
-                              pattern="[0-9]{6}"
-                              maxLength={6}
-                              placeholder="Your pincode"
-                              value={form.pincode}
-                              onChange={(e) => setForm({ ...form, pincode: e.target.value.replace(/\D/g, "").slice(0, 6) })}
-                              className="mt-2 w-full bg-transparent text-base font-medium outline-none placeholder:text-black/60"
-                            />
-                            <p className="mt-2 text-xs leading-5 text-black/45">We’re collecting this to understand where demand is coming from.</p>
-                          </label>
-                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3 sm:col-span-2">
-                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Preferred visit date</span>
-                            <div className="mt-2 flex items-center gap-3">
-                              <input required type="date" min={new Date().toISOString().split("T")[0]} value={appointmentDate} onChange={(e) => setAppointmentDate(e.target.value)} className="w-full bg-transparent text-base font-medium text-black outline-none" />
+                        <div className="mt-8">
+                          <div className="mb-3 flex items-end justify-between gap-4">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.2em] text-black/45">Your details</p>
+                              <p className="mt-1 text-sm text-black/55">We’ll use these to confirm your visit.</p>
                             </div>
-                            <p className="mt-2 text-sm leading-5 text-black/55">Choose the day that works best for you. We’ll call to confirm the visit.</p>
-                          </label>
-                          <label className="rounded-[18px] border border-black/10 bg-white/35 sm:col-span-2">
-                            <span className="block px-4 pt-3 text-sm uppercase tracking-[0.16em] text-black/50">Preferred visit time</span>
-                            <select required value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className="w-full bg-transparent px-4 py-3 text-sm outline-none">
-                              <option value="">Choose a time</option>
-                              <option>Morning</option>
-                              <option>Afternoon</option>
-                              <option>Evening</option>
-                            </select>
-                          </label>
+                            {profileLoaded && (form.name || form.phone || form.area) && (
+                              <span className="rounded-full border border-[#A77A42]/20 bg-[#A77A42]/[0.07] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#80613A]">
+                                Saved on this device
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white">
+                              <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">Full name</span>
+                              <input
+                                required
+                                type="text"
+                                autoComplete="name"
+                                placeholder="Prateek Raj"
+                                value={form.name}
+                                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                className="mt-1.5 w-full bg-transparent text-[16px] font-medium text-[#211719] outline-none placeholder:text-black/25"
+                              />
+                            </label>
+
+                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white">
+                              <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">Phone number</span>
+                              <input
+                                required
+                                type="tel"
+                                inputMode="tel"
+                                autoComplete="tel"
+                                placeholder="+91 98XXX XXXXX"
+                                value={form.phone}
+                                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                                className="mt-1.5 w-full bg-transparent text-[16px] font-medium text-[#211719] outline-none placeholder:text-black/25"
+                              />
+                            </label>
+
+                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white sm:col-span-2">
+                              <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">
+                                Email <span className="font-normal normal-case tracking-normal text-black/30">· optional</span>
+                              </span>
+                              <input
+                                type="email"
+                                autoComplete="email"
+                                placeholder="you@example.com"
+                                value={form.email}
+                                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                                className="mt-1.5 w-full bg-transparent text-[16px] font-medium text-[#211719] outline-none placeholder:text-black/25"
+                              />
+                            </label>
+
+                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white">
+                              <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">Area / address</span>
+                              <input
+                                required
+                                type="text"
+                                autoComplete="street-address"
+                                placeholder="HSR Layout, Sector 6"
+                                value={form.area}
+                                onChange={(e) => setForm({ ...form, area: e.target.value })}
+                                className="mt-1.5 w-full bg-transparent text-[16px] font-medium text-[#211719] outline-none placeholder:text-black/25"
+                              />
+                            </label>
+
+                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white">
+                              <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">Pincode</span>
+                              <input
+                                required
+                                type="text"
+                                inputMode="numeric"
+                                pattern="[0-9]{6}"
+                                maxLength={6}
+                                autoComplete="postal-code"
+                                placeholder="560102"
+                                value={form.pincode}
+                                onChange={(e) => setForm({ ...form, pincode: e.target.value.replace(/\D/g, "").slice(0, 6) })}
+                                className="mt-1.5 w-full bg-transparent text-[16px] font-medium text-[#211719] outline-none placeholder:text-black/25"
+                              />
+                            </label>
+                          </div>
+                        </div>
+
+                        <div className="mt-8">
+                          <div className="mb-3">
+                            <p className="text-xs uppercase tracking-[0.2em] text-black/45">When should we come?</p>
+                            <p className="mt-1 text-sm text-black/55">Pick a day and a convenient time window. We’ll call to confirm.</p>
+                          </div>
+
+                          <div className="flex gap-2 overflow-x-auto pb-2 snap-x">
+                            {visitDates.map((date) => {
+                              const active = appointmentDate === date.value;
+                              return (
+                                <button
+                                  key={date.value}
+                                  type="button"
+                                  onClick={() => setAppointmentDate(date.value)}
+                                  className={`min-w-[92px] snap-start rounded-[20px] border px-3 py-3.5 text-left transition ${
+                                    active
+                                      ? "border-[#211719] bg-[#211719] text-white shadow-[0_10px_24px_rgba(33,23,25,0.14)]"
+                                      : "border-black/10 bg-white/65 text-[#211719] hover:border-black/20 hover:bg-white"
+                                  }`}
+                                >
+                                  <span className={`block text-[10px] font-semibold uppercase tracking-[0.16em] ${active ? "text-[#D4B277]" : "text-black/45"}`}>
+                                    {date.day}
+                                  </span>
+                                  <span className="mt-1 block font-serif text-2xl leading-none">{date.date}</span>
+                                  <span className={`mt-1 block text-[11px] uppercase tracking-[0.12em] ${active ? "text-white/55" : "text-black/45"}`}>
+                                    {date.month}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                            {VISIT_TIMES.map((slot) => {
+                              const active = form.time === slot.value;
+                              return (
+                                <button
+                                  key={slot.value}
+                                  type="button"
+                                  onClick={() => setForm({ ...form, time: slot.value })}
+                                  className={`rounded-[20px] border px-4 py-4 text-left transition ${
+                                    active
+                                      ? "border-[#211719] bg-[#211719] text-white shadow-[0_10px_24px_rgba(33,23,25,0.12)]"
+                                      : "border-black/10 bg-white/65 text-[#211719] hover:border-black/20 hover:bg-white"
+                                  }`}
+                                >
+                                  <div className="flex items-center justify-between gap-2">
+                                    <span className="font-serif text-xl">{slot.title}</span>
+                                    <span className={`flex h-6 w-6 items-center justify-center rounded-full border text-xs ${active ? "border-[#D4B277] bg-[#D4B277] text-[#211719]" : "border-black/10 text-black/25"}`}>
+                                      {active ? "✓" : ""}
+                                    </span>
+                                  </div>
+                                  <span className={`mt-1 block text-xs ${active ? "text-white/55" : "text-black/45"}`}>{slot.detail}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          {!appointmentDate || !form.time ? (
+                            <p className="mt-3 text-xs text-black/40">Select a day and time window to continue.</p>
+                          ) : (
+                            <div className="mt-3 flex items-center gap-2 rounded-full border border-[#A77A42]/20 bg-[#A77A42]/[0.07] px-4 py-2.5 text-xs text-[#705531]">
+                              <span className="h-1.5 w-1.5 rounded-full bg-[#A77A42]" />
+                              Requested for {new Date(`${appointmentDate}T12:00:00`).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })} · {form.time}
+                            </div>
+                          )}
                         </div>
 
                         <div className="mt-6 overflow-hidden rounded-[22px] border border-black/10 bg-white/35">
@@ -1764,10 +1998,14 @@ export default function Home() {
                     <button
                       type="submit"
                       form="linearera-booking-form"
-                      disabled={submitting}
+                      disabled={submitting || !appointmentDate || !form.time}
                       className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528] disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {submitting ? "Saving your request..." : "Request my fit visit"}
+                      {submitting
+                        ? "Saving your request..."
+                        : !appointmentDate || !form.time
+                          ? "Choose date & time"
+                          : "Request my fit visit"}
                       <Arrow />
                     </button>
                   )}
