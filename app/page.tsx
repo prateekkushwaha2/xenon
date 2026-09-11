@@ -325,6 +325,24 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const root = document.documentElement;
+    const body = document.body;
+    const previousRoot = root.style.backgroundColor;
+    const previousBody = body.style.backgroundColor;
+    const previousOverscroll = root.style.overscrollBehaviorY;
+
+    root.style.backgroundColor = "#211719";
+    body.style.backgroundColor = "#211719";
+    root.style.overscrollBehaviorY = "none";
+
+    return () => {
+      root.style.backgroundColor = previousRoot;
+      body.style.backgroundColor = previousBody;
+      root.style.overscrollBehaviorY = previousOverscroll;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!profileLoaded) return;
 
     try {
@@ -1086,6 +1104,96 @@ export default function Home() {
       </section>
 
       {/* =====================================================
+          THE FIT RELATIONSHIP
+      ===================================================== */}
+
+      <section className="relative overflow-hidden bg-[#F7F1E7] px-5 py-24 md:px-10 md:py-36">
+        <div className="mx-auto max-w-[1400px]">
+          <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div className="lg:sticky lg:top-28">
+              <p className="text-xs uppercase tracking-[0.25em] text-black/50">
+                The first visit
+              </p>
+              <h2 className="mt-5 max-w-[680px] font-serif text-[clamp(52px,6.5vw,92px)] leading-[0.83] tracking-[-0.06em]">
+                We don't just
+                <br />
+                <span className="italic text-[#8B3152]">measure.</span>
+                <br />
+                We remember.
+              </h2>
+              <p className="mt-8 max-w-[430px] text-base leading-7 text-black/60">
+                A great fit is personal. We want to understand what feels right to you, how your clothes should sit, and what your wardrobe actually needs — not just write down a set of numbers.
+              </p>
+              <div className="mt-9 flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-black/45">
+                <span className="h-px w-10 bg-[#A77A42]" />
+                Your fit becomes easier every time.
+              </div>
+            </div>
+
+            <div>
+              {[
+                [
+                  "01",
+                  "Listen first",
+                  "We start with the garment and the person wearing it. What feels wrong? What do you wish it did differently? What kind of fit do you like?",
+                ],
+                [
+                  "02",
+                  "Observe how you move",
+                  "We look beyond a standing measurement — posture, shoulder slope, stance and how the garment behaves when you sit, reach and move.",
+                ],
+                [
+                  "03",
+                  "Measure what matters",
+                  "We take the body measurements relevant to the garment, then compare them with the garment itself. Alteration is about the relationship between both.",
+                ],
+                [
+                  "04",
+                  "Record your fit preferences",
+                  "Relaxed or sharp. Longer sleeve or cleaner break. More room here, less there. These preferences become part of your L’ERA fit notes.",
+                ],
+                [
+                  "05",
+                  "Keep learning",
+                  "On future visits, we don't start from zero. Your previous fit notes, preferences and alteration history can make the next experience faster and more personal.",
+                ],
+              ].map(([number, title, text]) => (
+                <div key={number} className="group border-t border-black/10 py-7 md:py-8">
+                  <div className="grid gap-4 md:grid-cols-[55px_220px_1fr] md:items-start">
+                    <span className="text-xs tracking-[0.18em] text-[#A77A42]">{number}</span>
+                    <h3 className="font-serif text-3xl leading-none tracking-[-0.03em] transition-transform duration-300 group-hover:translate-x-1 md:text-4xl">
+                      {title}
+                    </h3>
+                    <p className="max-w-[520px] text-sm leading-6 text-black/55">{text}</p>
+                  </div>
+                </div>
+              ))}
+
+              <div className="border-y border-black/10 py-8">
+                <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-black/45">
+                      The promise
+                    </p>
+                    <p className="mt-2 max-w-[560px] font-serif text-3xl leading-[0.95] md:text-4xl">
+                      The more we work with you, the less you have to explain.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => startBooking()}
+                    className="flex w-fit shrink-0 items-center gap-3 rounded-full bg-[#211719] px-6 py-3.5 text-xs uppercase tracking-[0.16em] text-white transition hover:bg-[#3A2528]"
+                  >
+                    Start your fit profile
+                    <Arrow />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================
           PRICING
       ===================================================== */}
 
@@ -1227,7 +1335,8 @@ export default function Home() {
 
             <button
               onClick={() => {
-                startBooking(undefined, "Family");
+                startBooking();
+                setOrderType("Family / Friends");
               }}
               className="mt-9 flex items-center gap-3 rounded-full bg-[#1B1515] px-7 py-4 text-xs uppercase tracking-[0.17em] text-white"
             >
@@ -1242,14 +1351,14 @@ export default function Home() {
           FINAL CTA
       ===================================================== */}
 
-      <section className="relative min-h-[720px] overflow-hidden bg-black">
+      <section className="relative min-h-[720px] overflow-hidden bg-[#211719]">
         <img
           src={IMAGES.consultation}
           alt="Doorstep fitting"
           className="absolute inset-0 h-full w-full object-cover opacity-50"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#211719] via-[#211719]/35 to-[#211719]/45" />
 
         <div className="relative mx-auto flex min-h-[720px] max-w-[1450px] flex-col justify-end px-6 pb-14 md:px-12 md:pb-20">
           <p className="text-xs uppercase tracking-[0.28em] text-white/65">
@@ -1412,7 +1521,7 @@ export default function Home() {
                         Your request is now in our system. We'll confirm the visit by phone and take it from there.
                       </p>
 
-                      <div className="mt-7 rounded-[22px] bg-[#211719] p-5 text-white">
+                      <div className="mt-7 rounded-[4px] bg-[#211719] p-5 text-white">
                         <p className="text-xs uppercase tracking-[0.2em] text-white/50">Your tracking ID</p>
                         <p className="mt-2 font-serif text-3xl tracking-[0.08em] text-[#D4B277]">{trackingId}</p>
                         <p className="mt-3 text-sm leading-5 text-white/60">
@@ -1753,7 +1862,7 @@ export default function Home() {
                           </div>
 
                           <div className="grid gap-3 sm:grid-cols-2">
-                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white">
+                            <label className="border-b border-black/12 bg-transparent px-1 py-3.5 transition focus-within:border-[#A77A42]">
                               <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">Full name</span>
                               <input
                                 required
@@ -1766,7 +1875,7 @@ export default function Home() {
                               />
                             </label>
 
-                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white">
+                            <label className="border-b border-black/12 bg-transparent px-1 py-3.5 transition focus-within:border-[#A77A42]">
                               <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">Phone number</span>
                               <input
                                 required
@@ -1780,7 +1889,7 @@ export default function Home() {
                               />
                             </label>
 
-                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white sm:col-span-2">
+                            <label className="border-b border-black/12 bg-transparent px-1 py-3.5 transition focus-within:border-[#A77A42] sm:col-span-2">
                               <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">
                                 Email <span className="font-normal normal-case tracking-normal text-black/30">· optional</span>
                               </span>
@@ -1794,7 +1903,7 @@ export default function Home() {
                               />
                             </label>
 
-                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white">
+                            <label className="border-b border-black/12 bg-transparent px-1 py-3.5 transition focus-within:border-[#A77A42]">
                               <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">Area / address</span>
                               <input
                                 required
@@ -1807,7 +1916,7 @@ export default function Home() {
                               />
                             </label>
 
-                            <label className="rounded-[20px] border border-black/10 bg-white/65 px-4 py-3.5 shadow-[0_8px_24px_rgba(33,23,25,0.03)] transition focus-within:border-[#A77A42]/60 focus-within:bg-white">
+                            <label className="border-b border-black/12 bg-transparent px-1 py-3.5 transition focus-within:border-[#A77A42]">
                               <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-black/45">Pincode</span>
                               <input
                                 required
