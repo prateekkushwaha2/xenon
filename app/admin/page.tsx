@@ -8,19 +8,32 @@ import toast from 'react-hot-toast'
 type Order = {
   id: number
   customer_name: string
-  email: string
+  email?: string | null
   phone: string
   address: string
+  area?: string | null
   city: string
   pincode: string
   total: number
   created_at: string
   status: string
+  tracking_id?: string | null
+  preferred_visit_date?: string | null
+  preferred_visit_time?: string | null
+  order_type?: string | null
+  group_size?: number | null
+  fit_issues?: string[] | null
+  marketing_source?: string | null
+  utm_source?: string | null
+  utm_medium?: string | null
+  utm_campaign?: string | null
+  fbclid?: string | null
+  gclid?: string | null
   order_items?: {
     product_name: string
     category: string
     price: number
-    quantity: number
+    quantity?: number
   }[]
 }
 
@@ -33,7 +46,6 @@ type Product = {
   images: string
   description: string
   features: string
-  featured: boolean
   stock: number
 }
 type Collection = {
@@ -67,7 +79,6 @@ export default function AdminPage() {
     images: '',
     description: '',
     features: '',
-    featured: false,
     stock:''
   })
   const [collection, setCollection] = useState<Collection>({
@@ -81,30 +92,6 @@ export default function AdminPage() {
     checkAdmin()
     fetchCollections()
   }, [])
-
-  const deleteCollection = async (
-    id: number
-  ) => {
-    const { error } =
-      await supabase
-        .from('collections')
-        .delete()
-        .eq('id', id)
-
-    if (error) {
-      console.log(error)
-
-      alert(
-        'Collection delete failed'
-      )
-
-      return
-    }
-
-    alert('Collection deleted')
-
-    fetchCollections()
-  }
 
   // CHECK ADMIN AUTH
   const checkAdmin = async () => {
@@ -130,9 +117,7 @@ export default function AdminPage() {
         order_items (
           product_name,
           category,
-          price,
-          quantity
-          
+          price
         )
       `)
       .order('created_at', {
@@ -245,56 +230,6 @@ export default function AdminPage() {
       setUploading(false)
     }
   }
-
-  const uploadCollectionImage = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = e.target.files?.[0]
-
-    if (!file) return
-
-    try {
-      setUploading(true)
-
-      const fileName = `${Date.now()}-${file.name}`
-
-      const { error } =
-        await supabase.storage
-          .from('products')
-          .upload(fileName, file)
-
-      if (error) {
-        console.log(error)
-
-        alert(
-          'Collection image upload failed'
-        )
-
-        return
-      }
-
-      const {
-        data: { publicUrl }
-      } = supabase.storage
-        .from('products')
-        .getPublicUrl(fileName)
-
-      setCollection({
-        ...collection,
-        image: publicUrl
-      })
-
-      alert(
-        'Collection image uploaded'
-      )
-    } catch (error) {
-      console.log(error)
-
-      alert('Upload failed')
-    } finally {
-      setUploading(false)
-    }
-  }   
   const uploadMultipleImages = async (
   e: React.ChangeEvent<HTMLInputElement>
    ) => {
@@ -439,7 +374,6 @@ export default function AdminPage() {
           product.description,
           features:
           product.features,
-          featured: product.featured,
           stock:
           Number(product.stock)
         }
@@ -461,7 +395,6 @@ export default function AdminPage() {
       images: '',
       description: '',
       features: '',
-      featured: false,
       stock: ''
     })
 
@@ -498,7 +431,7 @@ export default function AdminPage() {
         <div className="mb-16 flex items-center justify-between">
           <div>
             <p className="uppercase tracking-[0.4em] text-[#d4af37] text-sm mb-4">
-              XENON ADMIN
+              L’ERA ADMIN
             </p>
 
             <h1 className="text-6xl font-light">
@@ -671,9 +604,6 @@ export default function AdminPage() {
                     key={index}
                     src={image}
                     alt="Preview"
-                    loading="lazy"
-                    width={600}
-                    height={800}
                     className="
                     h-32
                     w-32
@@ -687,24 +617,6 @@ export default function AdminPage() {
               )}
             </div>
           )}
-          {/* Featured */}
-          <div className="flex items-center gap-4 mt-4">
-            <input
-              type="checkbox"
-              checked={product.featured}
-              onChange={(e) =>
-                setProduct({
-                  ...product,
-                  featured:
-                    e.target.checked
-                })
-              }
-            />
-
-            <p className="text-white/70">
-              Featured Product
-            </p>
-          </div>          
           <button
             onClick={addProduct}
             disabled={uploading}
@@ -748,9 +660,6 @@ export default function AdminPage() {
                   <img
                     src={item.image}
                     alt={item.name}
-                    loading="lazy"
-                    width={600}
-                    height={800}
                     className="h-[320px] w-full object-cover"
                   />
 
@@ -794,464 +703,181 @@ export default function AdminPage() {
             </div>
           )}
         </div>
-        {/* Collections CMS */}
-        <div className="mb-20">
-          <div
-            className="
-            border
-            border-white/10
-            rounded-[2rem]
-            bg-white/5
-            p-8
-            mb-12
-            "
-          >
-            <div className="mb-10">
-              <p className="uppercase tracking-[0.4em] text-[#d4af37] text-sm mb-3">
-                XENON CMS
-              </p>
 
-              <h2 className="text-4xl font-light">
-                Add Collection
+        {/* Orders / Fit requests */}
+        <div>
+          <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.35em] text-[#d4af37] mb-3">
+                L’ERA FIT REQUESTS
+              </p>
+              <h2 className="text-5xl mb-2">
+                Requests
               </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-5">
-              {/* Collection Name */}
-               <input
-                type="text"
-                placeholder="Collection Name"
-                value={collection.name}
-                onChange={(e) =>
-                  setCollection({
-                    ...collection,
-                    name: e.target.value
-                  })
-                }
-                className="
-                bg-black/30
-                border
-                border-white/10
-                rounded-2xl
-                px-6
-                py-5
-                outline-none
-                "
-              /> 
-
-              {/* Collection Banner */}
-               <input
-                type="text"
-                placeholder="Collection Banner Image URL"
-                value={collection.image}
-                onChange={(e) =>
-                  setCollection({
-                    ...collection,
-                    image: e.target.value
-                  })
-                }
-                className="
-                bg-black/30
-                border
-                border-white/10
-                rounded-2xl
-                px-6
-                py-5
-                outline-none
-                "
-              />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={uploadCollectionImage}
-                className="
-                border
-                border-white/10
-                rounded-2xl
-                px-5
-                py-4
-                bg-black
-                text-white
-                "
-              />               
-            </div>
-
-            {/* Featured */}
-            <div className="mt-6 flex items-center gap-4">
-              <input
-                type="checkbox"
-                checked={collection.featured}
-                onChange={(e) =>
-                  setCollection({
-                    ...collection,
-                    featured:
-                      e.target.checked
-                  })
-                }
-              />
-
-              <p className="text-white/70">
-                Show on homepage
+              <p className="text-white/45 max-w-2xl">
+                Every booking is captured here — including location, garments, fit issues, visit preference and ad attribution.
               </p>
             </div>
-
-            {/* Add Button */}
             <button
-              onClick={addCollection}
-              className="
-              mt-8
-              px-8
-              py-4
-              rounded-full
-              bg-[#d4af37]
-              text-black
-              font-semibold
-              hover:bg-white
-              transition-all
-              duration-300
-              "
+              onClick={fetchOrders}
+              className="self-start rounded-full border border-white/10 px-5 py-3 text-xs uppercase tracking-[0.15em] text-white/70 transition hover:bg-white hover:text-black"
             >
-              Add Collection
+              Refresh
             </button>
           </div>
-{/* This website is amde by prateek kushwaha github : @prateekkushwaha2*/}
-          {/* Collections List */}
-          <div>
-            <h2 className="text-5xl mb-10">
-              Collections
-            </h2>
-
-            {collections.length === 0 ? (
-              <p className="text-white/50">
-                No collections yet.
-              </p>
-            ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {collections.map(
-                  (item) => (
-                    <div
-                      key={item.id}
-                      className="
-                      border
-                      border-white/10
-                      rounded-[2rem]
-                      overflow-hidden
-                      bg-white/5
-                      "
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="
-                        h-[260px]
-                        w-full
-                        object-cover
-                        "
-                      />
-
-                      <div className="p-6">
-                        <p className="uppercase tracking-[0.3em] text-xs text-[#d4af37] mb-3">
-                          COLLECTION
-                        </p>
-
-                        <h3 className="text-3xl mb-4">
-                          {item.name}
-                        </h3>
-
-                        <div className="flex items-center justify-between">
-                          <span className="text-white/50">
-                            /collection/{item.slug}
-                          </span>
-
-                          {item.featured && (
-                            <span
-                              className="
-                              px-4
-                              py-2
-                              rounded-full
-                              bg-[#d4af37]
-                              text-black
-                              text-sm
-                              font-semibold
-                              "
-                            >
-                              Featured
-                            </span>
-                          )}
-                        </div>
-                          <button
-                            onClick={() =>
-                              deleteCollection(item.id!)
-                            }
-                            className="
-                            mt-6
-                            w-full
-                            py-3
-                            rounded-full
-                            border
-                            border-red-500/30
-                            text-red-400
-                            hover:bg-red-500
-                            hover:text-white
-                            transition-all
-                            duration-300
-                            "
-                          >
-                            Delete Collection
-                          </button>                        
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-            )}
-          </div>
-        </div> 
-        {/* Orders */}
-        <div>
-          <h2 className="text-5xl mb-10">
-            Orders
-          </h2>
 
           {loading ? (
-            <p className="text-white/50">
-              Loading orders...
-            </p>
+            <p className="text-white/50">Loading requests...</p>
           ) : orders.length === 0 ? (
-            <p className="text-white/50">
-              No orders yet.
-            </p>
+            <p className="text-white/50">No fit requests yet.</p>
           ) : (
             <div className="grid gap-6">
-              {orders.map((order) => (
-                <div
-                  key={order.id}
-                  className="border border-white/10 rounded-[2rem] p-8 bg-white/5"
-                >
-                  <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
-                    {/* LEFT */}
-                    <div className="flex-1">
-                      <h2 className="text-3xl mb-4">
-                        {order.customer_name}
-                      </h2>
-
-                      <div className="space-y-2 text-white/70">
-                        <p>
-                          📞 {order.phone}
-                        </p>
-
-                        <p>
-                          📍 {order.address}
-                        </p>
-
-                        <p>
-                          {order.city} —{' '}
-                          {order.pincode}
-                        </p>
-                      </div>
-
-                      {/* ORDER ITEMS */}
-                      {/* This website is amde by prateek kushwaha github : @prateekkushwaha2*/}
-                      <div className="mt-8">
-                        <p className="uppercase tracking-[0.3em] text-xs text-[#d4af37] mb-4">
-                          Ordered Products
-                        </p>
-
-                        <div className="space-y-3">
-                          {order.order_items?.map(
-                            (
-                              item,
-                              index
-                            ) => (
-                              <div
-                                key={index}
-                                className="
-                                flex
-                                items-center
-                                justify-between
-                                border
-                                border-white/10
-                                rounded-xl
-                                px-4
-                                py-3
-                                "
-                              >
-                                <div>
-                                  <p className="text-white">
-                                    {
-                                      item.product_name
-                                    }
-                                  </p>
-
-                                <p className="text-white/40 text-sm">
-                                  {item.category} • Qty: {item.quantity}
-                                </p>
-                                </div>
-
-                                <span className="text-[#d4af37]">
-                                  ₹
-                                  {item.price}
-                                </span>
-                              </div>
-                            )
-                          )}
+              {orders.map((order) => {
+                const currentStatus = statusUpdates[order.id] || order.status || 'Request Received'
+                return (
+                  <div
+                    key={order.id}
+                    className="border border-white/10 rounded-[2rem] p-6 md:p-8 bg-white/[0.035]"
+                  >
+                    <div className="flex flex-col xl:flex-row xl:justify-between gap-8">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-start justify-between gap-4">
+                          <div>
+                            <p className="text-xs uppercase tracking-[0.2em] text-white/35 mb-2">
+                              Request #{order.id}
+                            </p>
+                            <h2 className="text-3xl md:text-4xl">{order.customer_name}</h2>
+                          </div>
+                          <div className="rounded-full border border-[#d4af37]/25 bg-[#d4af37]/[0.08] px-4 py-2">
+                            <span className="text-[10px] uppercase tracking-[0.16em] text-[#d4af37]">Tracking</span>
+                            <p className="mt-0.5 font-mono text-sm text-white">{order.tracking_id || 'Not generated'}</p>
+                          </div>
                         </div>
+
+                        <div className="mt-6 grid gap-2 text-sm text-white/70 md:grid-cols-2">
+                          <p>📞 {order.phone}</p>
+                          {order.email ? <p>✉️ {order.email}</p> : <p className="text-white/35">✉️ No email provided</p>}
+                          <p>📍 {order.area || order.address}</p>
+                          <p>{order.city} — {order.pincode}</p>
+                          <p>🗓 {order.preferred_visit_date || 'Date not selected'}</p>
+                          <p>🕒 {order.preferred_visit_time || 'Time not selected'}</p>
+                          <p>👥 {order.order_type || 'Just me'} · {order.group_size || 1} {Number(order.group_size || 1) === 1 ? 'person' : 'people'}</p>
+                          <p>📣 {order.marketing_source || 'direct'}</p>
+                        </div>
+
+                        {order.fit_issues && order.fit_issues.length > 0 && (
+                          <div className="mt-5">
+                            <p className="text-[10px] uppercase tracking-[0.22em] text-white/35 mb-2">Fit issues</p>
+                            <div className="flex flex-wrap gap-2">
+                              {order.fit_issues.map((issue) => (
+                                <span key={issue} className="rounded-full bg-white/5 px-3 py-1.5 text-xs text-white/70">{issue}</span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="mt-7">
+                          <p className="uppercase tracking-[0.25em] text-xs text-[#d4af37] mb-3">Garments</p>
+                          <div className="flex flex-wrap gap-2">
+                            {order.order_items?.map((item, index) => (
+                              <div key={`${item.product_name}-${index}`} className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                                <p className="text-white">{item.product_name}</p>
+                                <p className="mt-1 text-xs text-white/35">{item.price > 0 ? `₹${item.price}+` : 'Price at home'}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {(order.utm_source || order.utm_medium || order.utm_campaign) && (
+                          <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-4">
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-white/35 mb-2">Ad attribution</p>
+                            <p className="text-xs text-white/60">
+                              {[order.utm_source, order.utm_medium, order.utm_campaign].filter(Boolean).join(' · ')}
+                            </p>
+                            {(order.fbclid || order.gclid) && (
+                              <p className="mt-1 text-[10px] text-white/25 break-all">
+                                Click ID: {order.fbclid || order.gclid}
+                              </p>
+                            )}
+                          </div>
+                        )}
                       </div>
-                    </div>
 
-                    {/* RIGHT */}
-                    <div className="lg:text-right">
-                      <p className="text-white/50 mb-2">
-                        Order #{order.id}
-                      </p>
+                      <div className="xl:w-[260px] shrink-0 xl:text-right">
+                        <p className="text-white/40 mb-2">Estimated total</p>
+                        <h3 className="text-4xl text-[#d4af37] mb-5">
+                          {order.total > 0 ? `₹${order.total}` : 'At home'}
+                        </h3>
 
-                      <select
-                        value={
-                          statusUpdates[
-                            order.id
-                          ] || order.status
-                        }
-                        onChange={(e) =>
-                          setStatusUpdates({
-                            ...statusUpdates,
-                            [order.id]:
-                              e.target.value
-                          })
-                        }
-                        className="
-                        bg-black
-                        border
-                        border-white/10
-                        rounded-xl
-                        px-4
-                        py-2
-                        mb-4
-                        "
-                        >
-                        <option value="packing">
-                          packing
-                        </option>
-
-                        <option value="Packed">
-                          Packed
-                        </option>
-
-                        <option value="Shipped">
-                          Shipped
-                        </option>
-
-                        <option value="Delivered">
-                          Delivered
-                        </option>
-                      </select>
-                      <div className="flex flex-col gap-3 mb-6">
-                        {/* Save Status */}
-                        <button
-                          onClick={() =>
-                            updateStatus(
-                              order.id,
-                              statusUpdates[
-                                order.id
-                              ] || order.status
-                            )
-                          }
-                          className="
-                          px-5
-                          py-3
-                          rounded-full
-                          bg-[#d4af37]
-                          text-black
-                          font-semibold
-                          hover:bg-white
-                          transition-all
-                          duration-300
-                          "
-                        >
-                          Save Status
-                        </button>
-
-                        {/* Send Email */}
-                        <button
-                          onClick={async () => {
-                            try {
-                              const response =
-                                await fetch(
-                                  '/api/send-email',
-                                  {
-                                    method: 'POST',
-                                    headers: {
-                                      'Content-Type':
-                                        'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                      to: order.email,
-
-                                      subject:
-                                        'Your XENON Order Update',
-
-                                      customerName:
-                                        order.customer_name,
-
-                                      orderId:
-                                        order.id,
-
-                                      status:
-                                        statusUpdates[
-                                          order.id
-                                        ] ||
-                                        order.status
-                                    })
-                                  }
-                                )
-
-                              if (!response.ok) {
-                                alert(
-                                  'Email failed'
-                                )
-
-                                return
-                              }
-
-                              alert(
-                                'Email sent successfully'
-                              )
-                            } catch (error) {
-                              console.log(error)
-
-                              alert(
-                                'Email send failed'
-                              )
+                        <div className="rounded-2xl border border-white/10 bg-black/20 p-4 text-left">
+                          <p className="text-[10px] uppercase tracking-[0.18em] text-white/35 mb-2">Update journey</p>
+                          <select
+                            value={currentStatus}
+                            onChange={(e) =>
+                              setStatusUpdates({ ...statusUpdates, [order.id]: e.target.value })
                             }
-                          }}
-                          className="
-                          px-5
-                          py-3
-                          rounded-full
-                          border
-                          border-white/10
-                          hover:bg-white
-                          hover:text-black
-                          transition-all
-                          duration-300
-                          "
-                        >
-                          Send Email
-                        </button>
+                            className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-sm outline-none"
+                          >
+                            <option value="Request Received">Request Received</option>
+                            <option value="Visit Confirmed">Visit Confirmed</option>
+                            <option value="Fit Assessed">Fit Assessed</option>
+                            <option value="In Tailoring">In Tailoring</option>
+                            <option value="Quality Check">Quality Check</option>
+                            <option value="Ready for Return">Ready for Return</option>
+                            <option value="Completed">Completed</option>
+                          </select>
+
+                          <div className="mt-3 flex flex-col gap-2">
+                            <button
+                              onClick={async () => {
+                                await updateStatus(order.id, currentStatus)
+                              }}
+                              className="px-5 py-3 rounded-full bg-[#d4af37] text-black font-semibold hover:bg-white transition-all duration-300"
+                            >
+                              Save Status
+                            </button>
+
+                            <button
+                              disabled={!order.email}
+                              onClick={async () => {
+                                if (!order.email) return
+                                try {
+                                  const response = await fetch('/api/send-email', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                      type: 'status-update',
+                                      to: order.email,
+                                      customerName: order.customer_name,
+                                      trackingId: order.tracking_id,
+                                      status: currentStatus,
+                                      appointmentDate: order.preferred_visit_date,
+                                      appointmentTime: order.preferred_visit_time,
+                                    }),
+                                  })
+
+                                  if (!response.ok) throw new Error('Email failed')
+                                  toast.success('Email sent successfully')
+                                } catch (error) {
+                                  console.error(error)
+                                  toast.error('Email could not be sent')
+                                }
+                              }}
+                              className="px-5 py-3 rounded-full border border-white/10 hover:bg-white hover:text-black transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-30"
+                            >
+                              {order.email ? 'Send Email Update' : 'No Email Provided'}
+                            </button>
+                          </div>
+                        </div>
+
+                        <p className="mt-4 text-xs text-white/30">
+                          {new Date(order.created_at).toLocaleString()}
+                        </p>
                       </div>
-
-                      <h3 className="text-4xl text-[#d4af37] mb-3">
-                        ₹{order.total}
-                      </h3>
-
-                      <p className="text-white/50">
-                        {new Date(
-                          order.created_at
-                        ).toLocaleString()}
-                      </p>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>
