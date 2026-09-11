@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 type Garment = {
   id: number;
@@ -224,9 +225,15 @@ export default function Home() {
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    email: "",
     area: "",
+    pincode: "",
     time: "",
   });
+
+  const [trackingId, setTrackingId] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     document.body.style.overflow = bookingOpen ? "hidden" : "";
@@ -330,9 +337,107 @@ export default function Home() {
     );
   };
 
-  const submitBooking = (event: FormEvent) => {
+  const generateTrackingId = () =>
+    `LE-${crypto.randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase()}`;
+
+  const submitBooking = async (event: FormEvent) => {
     event.preventDefault();
-    setSubmitted(true);
+    setSubmitError("");
+
+    if (submitting) return;
+
+    try {
+      setSubmitting(true);
+
+      const newTrackingId = generateTrackingId();
+      const params = new URLSearchParams(window.location.search);
+      const getParam = (key: string) => params.get(key) || null;
+
+      const { data: order, error: orderError } = await supabase
+        .from("orders")
+        .insert({
+          customer_name: form.name.trim(),
+          email: form.email.trim() || null,
+          phone: form.phone.trim(),
+          address: form.area.trim(),
+          area: form.area.trim(),
+          city: "Bengaluru",
+          pincode: form.pincode.trim(),
+          total,
+          status: "Request Received",
+          tracking_id: newTrackingId,
+          preferred_visit_date: appointmentDate || null,
+          preferred_visit_time: form.time,
+          order_type: orderType,
+          group_size: orderType === "Just me" ? 1 : groupSize,
+          fit_issues: issues,
+          marketing_source: getParam("utm_source") || document.referrer || "direct",
+          utm_source: getParam("utm_source"),
+          utm_medium: getParam("utm_medium"),
+          utm_campaign: getParam("utm_campaign"),
+          utm_content: getParam("utm_content"),
+          utm_term: getParam("utm_term"),
+          landing_page: window.location.pathname,
+          referrer: document.referrer || null,
+          fbclid: getParam("fbclid"),
+          gclid: getParam("gclid"),
+        })
+        .select("id, tracking_id")
+        .single();
+
+      if (orderError || !order) {
+        console.error(orderError);
+        throw new Error("We couldn't save your request. Please try again.");
+      }
+
+      const orderItems = selected.map((item) => ({
+        order_id: order.id,
+        product_name: item.name,
+        category: "Alteration",
+        price: item.price,
+        quantity: 1,
+      }));
+
+      if (orderItems.length > 0) {
+        const { error: itemsError } = await supabase
+          .from("order_items")
+          .insert(orderItems);
+
+        if (itemsError) {
+          console.error(itemsError);
+          throw new Error("Your request was saved, but the garment details could not be saved.");
+        }
+      }
+
+      setTrackingId(order.tracking_id || newTrackingId);
+
+      if (form.email.trim()) {
+        try {
+          await fetch("/api/send-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "confirmation",
+              to: form.email.trim(),
+              customerName: form.name.trim(),
+              trackingId: order.tracking_id || newTrackingId,
+              status: "Request Received",
+              appointmentDate,
+              appointmentTime: form.time,
+            }),
+          });
+        } catch (emailError) {
+          console.error("Confirmation email failed", emailError);
+        }
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      setSubmitError(error instanceof Error ? error.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -1183,8 +1288,21 @@ export default function Home() {
                         <span className="italic">you.</span>
                       </h3>
                       <p className="mt-6 max-w-[450px] text-sm leading-6 text-black/60">
-                        We'll confirm your visit, understand the garments you're bringing and arrange the next step.
+                        Your request is now in our system. We'll confirm the visit by phone and take it from there.
                       </p>
+
+                      <div className="mt-7 rounded-[22px] bg-[#211719] p-5 text-white">
+                        <p className="text-xs uppercase tracking-[0.2em] text-white/50">Your tracking ID</p>
+                        <p className="mt-2 font-serif text-3xl tracking-[0.08em] text-[#D4B277]">{trackingId}</p>
+                        <p className="mt-3 text-sm leading-5 text-white/60">
+                          Keep this ID. You can use it to check your request status from the tracking page.
+                        </p>
+                        {form.email.trim() ? (
+                          <p className="mt-3 text-xs text-white/45">A confirmation email was requested for {form.email.trim()}.</p>
+                        ) : (
+                          <p className="mt-3 text-xs text-white/45">No email was provided. Your phone number is enough for our team to contact you.</p>
+                        )}
+                      </div>
                     </div>
                     <button
                       onClick={closeBooking}
@@ -1501,8 +1619,27 @@ export default function Home() {
                             <input required type="tel" placeholder="+91" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
                           </label>
                           <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3 sm:col-span-2">
+                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Email <span className="normal-case tracking-normal text-black/35">(optional)</span></span>
+                            <input type="email" placeholder="For email updates, if you want them" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
+                          </label>
+                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
                             <span className="text-sm uppercase tracking-[0.16em] text-black/50">Area / locality</span>
-                            <input required type="text" placeholder="Where in Bengaluru?" value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
+                            <input required type="text" placeholder="HSR Layout, Sector 6" value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} className="mt-2 w-full bg-transparent text-sm outline-none placeholder:text-black/60" />
+                          </label>
+                          <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3">
+                            <span className="text-sm uppercase tracking-[0.16em] text-black/50">Pincode</span>
+                            <input
+                              required
+                              type="text"
+                              inputMode="numeric"
+                              pattern="[0-9]{6}"
+                              maxLength={6}
+                              placeholder="Your pincode"
+                              value={form.pincode}
+                              onChange={(e) => setForm({ ...form, pincode: e.target.value.replace(/\D/g, "").slice(0, 6) })}
+                              className="mt-2 w-full bg-transparent text-base font-medium outline-none placeholder:text-black/60"
+                            />
+                            <p className="mt-2 text-xs leading-5 text-black/45">We’re collecting this to understand where demand is coming from.</p>
                           </label>
                           <label className="rounded-[18px] border border-black/10 bg-white/35 px-4 py-3 sm:col-span-2">
                             <span className="text-sm uppercase tracking-[0.16em] text-black/50">Preferred visit date</span>
@@ -1541,6 +1678,13 @@ export default function Home() {
                             ))}
                           </div>
                         </div>
+
+                        {submitError && (
+                          <div className="mt-5 rounded-[18px] border border-[#A33A3A]/20 bg-[#A33A3A]/[0.06] px-4 py-3.5">
+                            <p className="text-sm font-semibold text-[#7D3030]">We couldn’t complete the request.</p>
+                            <p className="mt-1 text-sm leading-5 text-[#7D3030]/75">{submitError}</p>
+                          </div>
+                        )}
 
                         <div className="mt-6 overflow-hidden rounded-[24px] bg-[#211719] text-white shadow-[0_18px_45px_rgba(33,23,25,0.16)]">
                           <div className="grid gap-0 md:grid-cols-[1.15fr_0.85fr]">
@@ -1620,9 +1764,10 @@ export default function Home() {
                     <button
                       type="submit"
                       form="linearera-booking-form"
-                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528]"
+                      disabled={submitting}
+                      className="flex items-center gap-3 rounded-full bg-[#211719] px-7 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-[0_12px_30px_rgba(33,23,25,0.2)] transition hover:bg-[#3A2528] disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      Request my fit visit
+                      {submitting ? "Saving your request..." : "Request my fit visit"}
                       <Arrow />
                     </button>
                   )}
@@ -1636,4 +1781,3 @@ export default function Home() {
     </main>
   );
 }
-
