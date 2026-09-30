@@ -262,6 +262,9 @@ export default function Home() {
   const [step, setStep] = useState(1);
   const [selected, setSelected] = useState<Garment[]>([]);
   const [issues, setIssues] = useState<string[]>([]);
+  const [usualAlternative, setUsualAlternative] = useState("");
+  const [typicalGarmentCount, setTypicalGarmentCount] = useState("");
+  const [priorityReason, setPriorityReason] = useState("");
   const [customGarment, setCustomGarment] = useState("");
   const [garmentSearch, setGarmentSearch] = useState("");
   const [garmentCategory, setGarmentCategory] = useState("All");
@@ -410,6 +413,9 @@ export default function Home() {
     setStep(1);
     setSelected([]);
     setIssues([]);
+    setUsualAlternative("");
+    setTypicalGarmentCount("");
+    setPriorityReason("");
     setCustomGarment("");
     setGarmentSearch("");
     setGarmentCategory("All");
@@ -501,7 +507,12 @@ export default function Home() {
           preferred_visit_time: form.time,
           order_type: orderType,
           group_size: orderType === "Just me" ? 1 : groupSize,
-          fit_issues: issues,
+          fit_issues: [
+            ...issues,
+            ...(usualAlternative ? [`Validation · Usually: ${usualAlternative}`] : []),
+            ...(typicalGarmentCount ? [`Validation · Usually fits together: ${typicalGarmentCount}`] : []),
+            ...(priorityReason ? [`Validation · Main reason: ${priorityReason}`] : []),
+          ],
           marketing_source: getParam("utm_source") || document.referrer || "direct",
           utm_source: getParam("utm_source"),
           utm_medium: getParam("utm_medium"),
@@ -605,7 +616,7 @@ export default function Home() {
             onClick={() => startBooking()}
             className="rounded-full bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.15em] text-black transition hover:scale-[1.03]"
           >
-            Book a fit visit
+            Book a fitting
           </button>
         </div>
       </header>
@@ -635,23 +646,39 @@ export default function Home() {
             <div className="mb-7 flex items-center gap-3 text-white/65">
               <span className="h-px w-10 bg-white/60" />
               <span className="text-xs uppercase tracking-[0.28em]">
-                Bengaluru · Doorstep clothing alterations
+                Bengaluru · Clothing fit, at home
               </span>
             </div>
 
             <h1 className="max-w-[1100px] font-serif text-[clamp(52px,9.5vw,132px)] leading-[0.8] tracking-[-0.065em] text-white">
-              STOP GOING
+              YOUR CLOTHES.
               <br />
-              TO TAILORS.
+              YOUR FIT.
+              <br />
+              <span className="italic text-[#C7A56C]">AT HOME.</span>
             </h1>
 
             <div className="mt-10 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="max-w-[450px] text-base leading-7 text-white/75 md:text-lg">
-                  Professional clothing alterations,
+                  A better way to get your clothes fitted,
                   <br />
-                  measured at your doorstep.
+                  with a professional fit assessment at home.
                 </p>
+
+                <div className="mt-5 grid max-w-[720px] gap-2 sm:grid-cols-3">
+                  {[
+                    ["01", "Choose", "Your clothes"],
+                    ["02", "We visit", "You at home"],
+                    ["03", "Get the fit right", "We handle the rest"],
+                  ].map(([number, title, text]) => (
+                    <div key={number} className="rounded-2xl border border-white/15 bg-black/20 px-4 py-3 backdrop-blur-md">
+                      <p className="text-[10px] tracking-[0.18em] text-[#D4B277]">{number}</p>
+                      <p className="mt-1 text-sm font-semibold text-white">{title}</p>
+                      <p className="mt-0.5 text-xs text-white/55">{text}</p>
+                    </div>
+                  ))}
+                </div>
 
                 <div className="mt-4 flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/60">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#B68A4C]" />
@@ -663,7 +690,7 @@ export default function Home() {
                 onClick={() => startBooking()}
                 className="flex w-fit items-center gap-3 rounded-full bg-[#F7F1E7] px-7 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-[#1B1515] shadow-[0_12px_35px_rgba(0,0,0,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#C7A56C]"
               >
-                Book a fit visit
+                Book a fitting
                 <Arrow />
               </button>
             </div>
@@ -698,7 +725,7 @@ export default function Home() {
                 <br />
                 to plan your day
                 <br />
-                around a tailor.
+                around a clothing fitting.
               </h2>
             </div>
 
@@ -747,7 +774,7 @@ export default function Home() {
             <h3 className="mt-5 font-serif text-[clamp(52px,7vw,100px)] leading-[0.84] tracking-[-0.06em]">
               for a simple
               <br />
-              <span className="italic">alteration?</span>
+              <span className="italic">fit adjustment?</span>
             </h3>
 
             <p className="mt-6 text-sm text-black/60">
@@ -780,7 +807,7 @@ export default function Home() {
                 </p>
 
                 <p className="mt-1 font-serif text-3xl">
-                  The fitting room comes to you.
+                  The fit consultation comes to you.
                 </p>
               </div>
             </div>
@@ -795,7 +822,7 @@ export default function Home() {
                 <br />
                 wardrobe
                 <br />
-                <span className="italic">to your doorstep.</span>
+                <span className="italic">to a better fit.</span>
               </h2>
 
               <div className="mt-12">
@@ -807,13 +834,13 @@ export default function Home() {
                   ],
                   [
                     "02",
-                    "Fit visit",
+                    "Fitting",
                     "Our Fit Consultant visits you.",
                   ],
                   [
                     "03",
-                    "Tailoring",
-                    "A specialist makes the alteration.",
+                    "Work begins",
+                    "A specialist handles the requested changes.",
                   ],
                   [
                     "04",
@@ -823,7 +850,7 @@ export default function Home() {
                   [
                     "05",
                     "Return",
-                    "Your clothes come back to your doorstep.",
+                    "Your clothes are returned after the work is complete.",
                   ],
                 ].map(([number, title, text]) => (
                   <div
@@ -939,7 +966,7 @@ export default function Home() {
                 </p>
                 <div className="mt-7 h-px bg-white/10" />
                 <p className="mt-5 text-xs leading-5 text-white/65">
-                  We combine a human fit assessment with skilled alteration and a final quality check.
+                  We combine a human fit assessment with skilled garment work and a final quality check.
                 </p>
               </div>
             </div>
@@ -1045,7 +1072,7 @@ export default function Home() {
               <br />
               to know the
               <br />
-              <span className="italic">tailoring term.</span>
+              <span className="italic">technical term.</span>
             </h2>
 
             <p className="mt-8 max-w-[430px] text-sm leading-6 text-black/60">
@@ -1155,7 +1182,7 @@ export default function Home() {
                 [
                   "05",
                   "Keep learning",
-                  "On future visits, we don't start from zero. Your previous fit notes, preferences and alteration history can make the next experience faster and more personal.",
+                  "On future visits, we don't start from zero. Your previous fit notes, preferences and fit history can make the next experience faster and more personal.",
                 ],
               ].map(([number, title, text]) => (
                 <div key={number} className="group border-t border-black/10 py-7 md:py-8">
@@ -1257,7 +1284,7 @@ export default function Home() {
                 </p>
                 <p className="mt-2 text-base leading-6">
                   Starting prices are shown online. Your Fit Consultant confirms
-                  the final alteration price after seeing the garments at home.
+                  the final price after seeing the garments at home.
                 </p>
               </div>
             </div>
@@ -1354,7 +1381,7 @@ export default function Home() {
       <section className="relative min-h-[720px] overflow-hidden bg-[#211719]">
         <img
           src={IMAGES.consultation}
-          alt="Doorstep fitting"
+          alt="At-home fitting"
           className="absolute inset-0 h-full w-full object-cover opacity-50"
         />
 
@@ -1378,12 +1405,12 @@ export default function Home() {
               onClick={() => startBooking()}
               className="flex items-center justify-center gap-3 rounded-full bg-white px-8 py-5 text-sm font-semibold uppercase tracking-[0.15em] text-black"
             >
-              Book a fit visit
+              Book a fitting
               <Arrow />
             </button>
 
             <span className="text-xs text-white/55">
-              No app. No shop visit. No complicated form.
+              No app. No travel. No complicated form.
             </span>
           </div>
         </div>
@@ -1428,7 +1455,7 @@ export default function Home() {
           onClick={() => startBooking()}
           className="flex w-full items-center justify-center gap-3 rounded-full bg-[#1B1515] px-6 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white shadow-2xl ring-1 ring-[#C7A56C]/20"
         >
-          Book a fit visit
+          Book a fitting
           <Arrow />
         </button>
       </div>
@@ -1451,7 +1478,7 @@ export default function Home() {
                 <span className="font-serif text-xl font-medium tracking-[0.12em]">L’ERA</span>
                 <span className="h-3 w-px bg-white/20" />
                 <span className="text-sm uppercase tracking-[0.2em] text-white/65">
-                  Fit visit
+                  Fitting
                 </span>
               </div>
               <button
@@ -1518,7 +1545,7 @@ export default function Home() {
                         <span className="italic">you.</span>
                       </h3>
                       <p className="mt-6 max-w-[450px] text-sm leading-6 text-black/60">
-                        Your request is now in our system. We'll confirm the visit by phone and take it from there.
+                        We're currently validating demand for home fitting in Bengaluru. We'll review your request and contact you regarding your preferred date and time.
                       </p>
 
                       <div className="mt-7 rounded-[4px] bg-[#211719] p-5 text-white">
@@ -1540,7 +1567,7 @@ export default function Home() {
                         onClick={() => startBooking()}
                         className="w-full rounded-full bg-[#211719] px-7 py-5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#3A2528]"
                       >
-                        Book another fit visit
+                        Book another fitting
                       </button>
                       <a
                         href="/track"
@@ -1708,7 +1735,7 @@ export default function Home() {
                               Add garment
                             </button>
                           </div>
-                          <p className="mt-2 text-xs leading-5 text-black/50">Price for custom garments is confirmed by your Fit Consultant after seeing the garment.</p>
+                          <p className="mt-2 text-xs leading-5 text-black/50">Price for custom garments is confirmed after the assessment.</p>
                         </div>
 
                          {selected.length > 0 && (
@@ -1757,7 +1784,7 @@ export default function Home() {
                               <span className="italic">feels wrong.</span>
                             </h4>
                             <p className="mt-5 max-w-[440px] text-sm leading-6 text-black/60">
-                              You don't need to know tailoring terminology. Choose what you notice — our Fit Consultant will assess the rest.
+                              You don't need to know technical terminology. Choose what you notice — our Fit Consultant will assess the rest.
                             </p>
                           </div>
                           <div className="hidden overflow-hidden rounded-[20px] md:block">
@@ -1842,6 +1869,11 @@ export default function Home() {
                             <p className="mt-5 max-w-[430px] text-sm leading-6 text-black/60">
                               A Fit Consultant visits your home, understands the garments and arranges the next step.
                             </p>
+
+                            <div className="mt-5 rounded-2xl border border-[#A77A42]/20 bg-[#A77A42]/[0.07] p-4">
+                              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#80613A]">Before you book</p>
+                              <p className="mt-1.5 text-sm leading-5 text-[#5F4B36]">No payment is required now. We’re currently validating demand for home fitting in Bengaluru. Your request helps us understand where this service is needed.</p>
+                            </div>
                           </div>
                           <div className="hidden overflow-hidden rounded-[20px] md:block">
                             <img src={IMAGES.home} alt="At-home L’ERA service" className="aspect-[4/5] w-full object-cover" />
@@ -1852,7 +1884,7 @@ export default function Home() {
                           <div className="mb-3 flex items-end justify-between gap-4">
                             <div>
                               <p className="text-xs uppercase tracking-[0.2em] text-black/45">Your details</p>
-                              <p className="mt-1 text-sm text-black/55">We’ll use these to confirm your visit.</p>
+                              <p className="mt-1 text-sm text-black/55">We’ll use these to review your request and contact you.</p>
                             </div>
                             {profileLoaded && (form.name || form.phone || form.area) && (
                               <span className="rounded-full border border-[#A77A42]/20 bg-[#A77A42]/[0.07] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#80613A]">
@@ -1937,7 +1969,7 @@ export default function Home() {
                         <div className="mt-8">
                           <div className="mb-3">
                             <p className="text-xs uppercase tracking-[0.2em] text-black/45">When should we come?</p>
-                            <p className="mt-1 text-sm text-black/55">Pick a day and a convenient time window. We’ll call to confirm.</p>
+                            <p className="mt-1 text-sm text-black/55">Pick the day and time you would ideally prefer.</p>
                           </div>
 
                           <div className="flex gap-2 overflow-x-auto pb-2 snap-x">
@@ -2002,16 +2034,48 @@ export default function Home() {
                           )}
                         </div>
 
+                        <div className="mt-7 rounded-[22px] border border-black/10 bg-white/45 p-5">
+                          <p className="text-sm uppercase tracking-[0.2em] text-black/55">One quick question</p>
+                          <p className="mt-1 text-sm leading-5 text-black/55">This helps us understand how people would use L’Era.</p>
+
+                          <div className="mt-5">
+                            <p className="text-sm font-semibold text-[#211719]">What would you normally do instead?</p>
+                            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                              {["Visit my usual place", "Find somewhere new", "Do it myself", "Leave it as it is"].map((option) => (
+                                <button key={option} type="button" onClick={() => setUsualAlternative(option)} className={`rounded-xl border px-4 py-3 text-left text-sm transition ${usualAlternative === option ? "border-[#211719] bg-[#211719] text-white" : "border-black/10 bg-white/60 text-black/65 hover:bg-white"}`}>{option}</button>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="mt-5">
+                            <p className="text-sm font-semibold text-[#211719]">How many clothes would you usually want fitted together?</p>
+                            <div className="mt-2 grid grid-cols-4 gap-2">
+                              {["1", "2", "3–4", "5+"].map((option) => (
+                                <button key={option} type="button" onClick={() => setTypicalGarmentCount(option)} className={`rounded-xl border px-3 py-3 text-center text-sm transition ${typicalGarmentCount === option ? "border-[#211719] bg-[#211719] text-white" : "border-black/10 bg-white/60 text-black/65 hover:bg-white"}`}>{option}</button>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="mt-5">
+                            <p className="text-sm font-semibold text-[#211719]">What matters most to you?</p>
+                            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                              {["Saving time", "No travel / parking", "Better fit", "Convenience at home"].map((option) => (
+                                <button key={option} type="button" onClick={() => setPriorityReason(option)} className={`rounded-xl border px-4 py-3 text-left text-sm transition ${priorityReason === option ? "border-[#211719] bg-[#211719] text-white" : "border-black/10 bg-white/60 text-black/65 hover:bg-white"}`}>{option}</button>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
                         <div className="mt-6 overflow-hidden rounded-[22px] border border-black/10 bg-white/35">
                           <div className="border-b border-black/10 px-5 py-4">
                             <p className="text-sm uppercase tracking-[0.2em] text-black/55">What happens next</p>
                           </div>
                           <div className="grid sm:grid-cols-2 lg:grid-cols-4">
                             {[
-                              ["01", "We call", "Confirm your visit"],
+                              ["01", "We contact you", "Review your request"],
                               ["02", "We fit", "Assess garments + take measurements"],
-                              ["03", "You pay at home", "Final price confirmed after assessment"],
-                              ["04", "We handle it", "Tailoring + quality check"],
+                              ["03", "Payment after assessment", "Final price confirmed after assessment"],
+                              ["04", "We handle it", "Work + quality check"],
                             ].map(([number, title, description]) => (
                               <div key={number} className="border-b border-black/10 p-4 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
                                 <span className="text-xs text-[#A77A42]">{number}</span>
@@ -2040,7 +2104,7 @@ export default function Home() {
                               <p className="mt-4 max-w-[520px] text-sm leading-6 text-white/65">
                                 {selected.some((item) => item.price === 0)
                                   ? "Your selection includes a garment outside our standard list. Your Fit Consultant will assess it and confirm the final price at home."
-                                  : "This is an estimate based on your selected garments. The final alteration price is confirmed only after your Fit Consultant sees the garments and understands the fit required."}
+                                  : "This is an estimate based on your selected garments. The final price is confirmed only after your Fit Consultant sees the garments and understands the fit required."}
                               </p>
                             </div>
 
@@ -2072,7 +2136,7 @@ export default function Home() {
                               <span>{selected.some((item) => item.price === 0) ? "Price confirmed at home" : `Estimated ₹${total}`}</span>
                             </div>
                             {discount > 0 && <div className="mt-2 flex justify-between text-sm text-[#D4B277]"><span>Bundle saving</span><span>-₹{discount}</span></div>}
-                            <p className="mt-3 text-sm leading-5 text-white/45">Final pricing is confirmed at your doorstep before the alteration proceeds.</p>
+                            <p className="mt-3 text-sm leading-5 text-white/45">Final pricing is confirmed after the assessment, before any work proceeds.</p>
                           </div>
                         </div>
                       </form>
@@ -2114,7 +2178,7 @@ export default function Home() {
                         ? "Saving your request..."
                         : !appointmentDate || !form.time
                           ? "Choose date & time"
-                          : "Request my fit visit"}
+                          : "Book a fitting"}
                       <Arrow />
                     </button>
                   )}
