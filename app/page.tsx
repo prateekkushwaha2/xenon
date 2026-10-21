@@ -2033,8 +2033,10 @@ export default function Home() {
                             </div>
                           )}
                         </div>
-
-                        <div className="mt-7 rounded-[22px] border border-black/10 bg-white/45 p-5">
+                              {/* =====================================================
+          VISUAL WARDROBE CTA
+      ===================================================== 
+        <div className="mt-7 rounded-[22px] border border-black/10 bg-white/45 p-5">
                           <p className="text-sm uppercase tracking-[0.2em] text-black/55">One quick question</p>
                           <p className="mt-1 text-sm leading-5 text-black/55">This helps us understand how people would use L’Era.</p>
 
@@ -2065,6 +2067,8 @@ export default function Home() {
                             </div>
                           </div>
                         </div>
+      
+      */}
 
                         <div className="mt-6 overflow-hidden rounded-[22px] border border-black/10 bg-white/35">
                           <div className="border-b border-black/10 px-5 py-4">
